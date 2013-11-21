@@ -6,6 +6,7 @@ Actually This is not a window manager :) . Hopefully one day it will be a minima
 It contains just experiments on xlib development. 
 
 Actually you can find experiments on:
+
 1. Basic event handling
 2. Basic keyboard handling
 3. Window creation
