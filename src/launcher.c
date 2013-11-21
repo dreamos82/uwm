@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stddef.h>
+#include <X11/Xlib.h>
+#include <X11/X.h>
+#include <X11/Xutil.h>
+
+#include "definitions.h"
+#include "window.h"
+#include "launcher.h"
+
+void create_launcher(Display *display, Window parent_window, ScreenInfos infos){
+  Window window = draw_window(display, parent_window, infos.screen_num, infos.width/2, infos.height/2, 100, 30);
+  XSelectInput(display, window, ExposureMask | ButtonPressMask | KeyPressMask);
+  XGCValues     values;
+  GC gc = XCreateGC(display, window, 0, &values);
+  put_text(display, window, gc, "Test", "9x15", infos);
+  XMapWindow(display, window);
+}
