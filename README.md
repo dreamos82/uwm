@@ -12,3 +12,16 @@ Actually you can find experiments on:
 3. Window creation
 4. Setting color background
 5. Showing Text
+
+Compile and launch
+------------------
+
+Actually there are not compilation script, so it must be done manually:
+
+	# gcc main.c utils.c handlers.c window.c launcher.c -lX11 -o main
+	
+And then you can launch it with:
+
+	#xinit ./main -- :1
+
+(With that command a new X server will be launched, and you don't need to close the running server)

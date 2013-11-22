@@ -14,9 +14,9 @@
 //#include "background.h"
 #include "utils.h"
 
-Window draw_window(Display *display, Window parent_window, int screen_num,int posx, int posy, int width, int height){
+Window draw_window(Display *display, Window parent_window, int screen_num,int posx, int posy, int width, int height, int border_width){
 	Window window;
-	window = XCreateSimpleWindow(display, parent_window, posx, posy, width, height, 10, BlackPixel(display,screen_num),WhitePixel(display,screen_num));
+	window = XCreateSimpleWindow(display, parent_window, posx, posy, width, height, border_width, BlackPixel(display,screen_num),WhitePixel(display,screen_num));
 	return window;
 }
 

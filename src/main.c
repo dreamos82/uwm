@@ -35,7 +35,7 @@ int main(){
 	printf("Test Infos: %d\n", infos.width);
 	cursor = XCreateFontCursor(display, cursor_shape);
 	XDefineCursor(display, root_window, cursor);
-	XSelectInput(display, root_window, ExposureMask | ButtonPressMask | KeyPressMask);	
+	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask);	
 	//set_window_background(display,&gc, "background.png", root_window);
 	printf("Background\n");	
 	XEvent local_event;	
@@ -43,16 +43,21 @@ int main(){
 	XGCValues     values;
 	GC gc = XCreateGC(display, root_window, 0, &values);
 	put_text(display, root_window, gc,"Test message", "9x15", infos);
+	Window cur_win;
 	while(1){
 		XNextEvent(display, &local_event);		
 		switch(local_event.type){
 			case Expose:
-				printf("Expose window event");
+				printf("Expose window event");				
+			break;
+			case CreateNotify:
+				cur_win = local_event.xcreatewindow.window;
+				XSetWindowBorderWidth(display, cur_win,10);
 			break;
 			case ButtonPress:
 				printf("Event button pressed\n");
 				button_handler(local_event);
-				Window cur_win = draw_window(display, root_window, infos.screen_num, 300,300, 200,200);				
+				Window cur_win = draw_window(display, root_window, infos.screen_num, 300,300, 200,200,10);	
 				XMapWindow(display, cur_win);
 				Window launcher_win = create_launcher(display, root_window,infos);
 			break;
