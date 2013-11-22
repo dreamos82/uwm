@@ -22,6 +22,6 @@ Actually there are not compilation script, so it must be done manually:
 	
 And then you can launch it with:
 
-	#xinit ./main -- :1
+	# xinit ./main -- :1
 
 (With that command a new X server will be launched, and you don't need to close the running server)

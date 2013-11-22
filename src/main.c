@@ -45,25 +45,28 @@ int main(){
 	put_text(display, root_window, gc,"Test message", "9x15", infos);
 	Window cur_win;
 	while(1){
-		XNextEvent(display, &local_event);		
+		XNextEvent(display, &local_event);
 		switch(local_event.type){
 			case Expose:
-				printf("Expose window event");				
+				printf("Expose window event");
 			break;
 			case CreateNotify:
 				cur_win = local_event.xcreatewindow.window;
+				char *window_name;
+				XFetchName(display, cur_win, &window_name);
+				printf("Window name: %s\n", window_name);
 				XSetWindowBorderWidth(display, cur_win,10);
 			break;
 			case ButtonPress:
 				printf("Event button pressed\n");
 				button_handler(local_event);
-				Window cur_win = draw_window(display, root_window, infos.screen_num, 300,300, 200,200,10);	
+				Window cur_win = draw_window(display, root_window, infos.screen_num, 350,350, 200,200,10);
 				XMapWindow(display, cur_win);
-				Window launcher_win = create_launcher(display, root_window,infos);
+				//Window launcher_win = create_launcher(display, root_window,infos);
 			break;
 			case KeyPress:
 				printf("Keyboard key pressed\n");
-				keyboard_handler(local_event, display);				
+				keyboard_handler(local_event, display);
 			break;
 			default: 
 				printf("default event\n");
