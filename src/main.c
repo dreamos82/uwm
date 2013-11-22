@@ -55,6 +55,7 @@ int main(){
 				char *window_name;
 				XFetchName(display, cur_win, &window_name);
 				printf("Window name: %s\n", window_name);
+				XFree(window_name);
 				XSetWindowBorderWidth(display, cur_win,10);
 			break;
 			case ButtonPress:
