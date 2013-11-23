@@ -20,6 +20,12 @@ Window draw_window(Display *display, Window parent_window, int screen_num,int po
 	return window;
 }
 
+Window draw_window_with_name(Display *display, Window parent_window, char* name, int screen_num,int posx, int posy, int width, int height, int border_width){
+	Window window;
+	window = XCreateSimpleWindow(display, parent_window, posx, posy, width, height, border_width, BlackPixel(display,screen_num),WhitePixel(display,screen_num));
+	XStoreName(display, window, name);
+	return window;
+}
 void set_window_input_mask(Display *display, Window window, long event_mask){
 	XSelectInput(display, window, event_mask);
 }

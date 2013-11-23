@@ -29,7 +29,7 @@ int main(){
 	print_informations(display);
 	infos = get_screen_informations(display);
 	root_window= RootWindow(display, infos.screen_num);
-	
+	XStoreName(display, root_window, "Root Window");
 	char root_color[] = "#1337AC";
 	set_window_color(display, root_window, root_color);
 	printf("Test Infos: %d\n", infos.width);
@@ -61,8 +61,10 @@ int main(){
 			case ButtonPress:
 				printf("Event button pressed\n");
 				button_handler(local_event);
-				Window cur_win = draw_window(display, root_window, infos.screen_num, 350,350, 200,200,10);
-				XMapWindow(display, cur_win);
+				if(local_event.xbutton.button==Button1){
+				  Window cur_win = draw_window_with_name(display, root_window, "TestWindow",infos.screen_num, 350,350, 200,200,10);
+				  XMapWindow(display, cur_win);
+				}
 				//Window launcher_win = create_launcher(display, root_window,infos);
 			break;
 			case KeyPress:

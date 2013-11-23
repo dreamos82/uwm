@@ -21,6 +21,14 @@ void button_handler(XEvent event){
       break;
     case Button3:
       printf("Right Button pressed\n");      
+      Window current_window = event.xbutton.subwindow;
+      char *window_name;
+      if(current_window!=None){
+	XFetchName(event.xbutton.display, current_window, &window_name);
+      } else {
+	XFetchName(event.xbutton.display, event.xbutton.window, &window_name);
+      }
+      printf("Click on: %s", window_name);
       break;
   }
 }
@@ -38,5 +46,5 @@ char keyboard_handler(XEvent event, Display* display){
     }
   }
   int ascii_key = key_symbol - XK_A + 'A';
-  printf("Key pressed - '%c'\n", ascii_key);
+  //printf("Key pressed - '%c'\n", ascii_key);
 }
