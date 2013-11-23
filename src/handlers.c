@@ -28,7 +28,8 @@ void button_handler(XEvent event){
       } else {
 	XFetchName(event.xbutton.display, event.xbutton.window, &window_name);
       }
-      printf("Click on: %s", window_name);
+      printf("Click on: %s\n", window_name);
+      XFree(window_name);
       break;
   }
 }
