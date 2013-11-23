@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <errno.h>
 
+#include "error.h"
 #include "utils.h"
 #include "main.h"
 #include "handlers.h"
@@ -26,6 +27,7 @@ int main(){
 		printf("Cannot connect to display\n");
 		return -1;
 	}
+	XSetErrorHandler(_X_error_handler);
 	print_informations(display);
 	infos = get_screen_informations(display);
 	root_window= RootWindow(display, infos.screen_num);
@@ -35,10 +37,10 @@ int main(){
 	printf("Test Infos: %d\n", infos.width);
 	cursor = XCreateFontCursor(display, cursor_shape);
 	XDefineCursor(display, root_window, cursor);
-	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask);	
+	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask);
 	//set_window_background(display,&gc, "background.png", root_window);
-	printf("Background\n");	
-	XEvent local_event;	
+	printf("Background\n");
+	XEvent local_event;
 	XFlush(display);
 	XGCValues     values;
 	GC gc = XCreateGC(display, root_window, 0, &values);
@@ -58,6 +60,15 @@ int main(){
 				XFree(window_name);
 				XSetWindowBorderWidth(display, cur_win,10);
 			break;
+			case MapNotify:
+				printf("Map Notify\n");
+				XWindowAttributes win_attr;
+				char *child_name;
+				XGetWindowAttributes(display, cur_win, &win_attr);
+				XFetchName(display, local_event.xmap.window, &child_name);
+				printf("Attributes: W: %d - H: %d - %s\n", win_attr.width, win_attr.height, child_name);				
+				XFree(child_name);
+			break;
 			case ButtonPress:
 				printf("Event button pressed\n");
 				button_handler(local_event);
@@ -72,7 +83,7 @@ int main(){
 				keyboard_handler(local_event, display);
 			break;
 			default: 
-				printf("default event\n");
+				printf("default event %d\n", local_event.type);
 			break;
 		}
 	}
