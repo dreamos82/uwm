@@ -30,7 +30,7 @@ Compile and launch
 
 Actually there are no compilation script, so it must be done manually:
 
-	# gcc main.c utils.c handlers.c window.c launcher.c -lX11 -o main
+	# gcc main.c utils.c handlers.c window.c launcher.c error.c -lX11 -o main
 	
 And then you can launch it with:
 
