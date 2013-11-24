@@ -60,14 +60,21 @@ int main(){
 				XFree(window_name);
 				XSetWindowBorderWidth(display, cur_win,10);
 			break;
+			case ConfigureNotify:
+			break;
 			case MapNotify:
 				printf("Map Notify\n");
 				XWindowAttributes win_attr;
 				char *child_name;
 				XGetWindowAttributes(display, cur_win, &win_attr);
 				XFetchName(display, local_event.xmap.window, &child_name);
-				printf("Attributes: W: %d - H: %d - %s\n", win_attr.width, win_attr.height, child_name);				
-				XFree(child_name);
+				printf("Attributes: W: %d - H: %d - Name: %s\n", win_attr.width, win_attr.height, child_name);
+				if(strcmp(child_name, "Parent")){
+				  cur_win = draw_window_with_name(display,root_window, "Parent", infos.screen_num, win_attr.x, win_attr.y, win_attr.width, win_attr.height+10, 0);
+				  XMapWindow(display, cur_win);
+				  XReparentWindow(display,local_event.xmap.window, cur_win,0, 0);
+				}
+				XFree(child_name);				
 			break;
 			case ButtonPress:
 				printf("Event button pressed\n");
