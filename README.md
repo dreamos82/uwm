@@ -19,6 +19,12 @@ In order to compile this program needs the following packages:
 
 * libx11-dev
 
+To run correctly it also need the following program installed:
+
+* xterm
+
+(since it is the only program launched by this useless window manager)
+
 Compile and launch
 ------------------
 
