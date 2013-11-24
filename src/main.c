@@ -44,7 +44,7 @@ int main(){
 	XFlush(display);
 	XGCValues     values;
 	GC gc = XCreateGC(display, root_window, 0, &values);
-	put_text(display, root_window, gc,"Test message", "9x15", infos);
+	put_text(display, root_window, gc,"Test message", "9x15", 50,50,infos);
 	Window cur_win;
 	while(1){
 		XNextEvent(display, &local_event);
@@ -58,9 +58,7 @@ int main(){
 				XFetchName(display, cur_win, &window_name);
 				printf("Window name: %s\n", window_name);
 				XFree(window_name);
-				XSetWindowBorderWidth(display, cur_win,10);
-			break;
-			case ConfigureNotify:
+				XSetWindowBorderWidth(display, cur_win, BORDER_WIDTH);
 			break;
 			case MapNotify:
 				printf("Map Notify\n");
@@ -71,6 +69,8 @@ int main(){
 				printf("Attributes: W: %d - H: %d - Name: %s\n", win_attr.width, win_attr.height, child_name);
 				if(strcmp(child_name, "Parent")){
 				  cur_win = draw_window_with_name(display,root_window, "Parent", infos.screen_num, win_attr.x, win_attr.y, win_attr.width, win_attr.height+10, 0);
+				  GC local_gc = XCreateGC(display, cur_win, 0, &values);
+				  //put_text(display, cur_win, local_gc, child_name, "9x15", win_attr.width, win_attr.height, infos);
 				  XMapWindow(display, cur_win);
 				  XReparentWindow(display,local_event.xmap.window, cur_win,0, 0);
 				}
@@ -80,7 +80,7 @@ int main(){
 				printf("Event button pressed\n");
 				button_handler(local_event);
 				if(local_event.xbutton.button==Button1){
-				  Window cur_win = draw_window_with_name(display, root_window, "TestWindow",infos.screen_num, 350,350, 200,200,10);
+				  Window cur_win = draw_window_with_name(display, root_window, "TestWindow",infos.screen_num, 350,350, 200,200,BORDER_NONE);
 				  XMapWindow(display, cur_win);
 				}
 				//Window launcher_win = create_launcher(display, root_window,infos);

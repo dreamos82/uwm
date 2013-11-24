@@ -56,20 +56,18 @@ void set_window_background(Display *display, GC *gc, char* image_path, Window wi
   //XPutImage(display, window, *gc, img, 0,0,0,0, 1920, 1440);*/
 }
 
-void put_text(Display* display, Window window, GC gc,char* text, char *font_name, ScreenInfos infos){
+void put_text(Display* display, Window window, GC gc,char* text, char *font_name, int x, int y, ScreenInfos infos){
   XFontStruct* font_info;  
   font_info = XLoadQueryFont(display, font_name);
   if (!font_info) {
     fprintf(stderr, "XLoadQueryFont: failed loading font '%s'\n", font_name);
   }
-  int x, y;
-  x=y=0;
   int sw;
   sw = XTextWidth(font_info, text, strlen(text));
   XSetFont(display, gc, font_info->fid);
-  XSetBackground(display, gc, WhitePixel(display,0));
-  XSetForeground(display, gc, BlackPixel(display,0));
+  XSetBackground(display, gc, BlackPixel(display,0));
+  XSetForeground(display, gc, WhitePixel(display,0));
   printf("Drawing: %s %d\n", text, strlen(text));
-  XDrawString(display, window, gc, x+50, y+50, text, strlen(text));
+  XDrawString(display, window, gc, x, y, text, strlen(text));
   XFlush(display);
 }

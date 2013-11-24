@@ -15,6 +15,6 @@ void create_launcher(Display *display, Window parent_window, ScreenInfos infos){
   XSelectInput(display, window, ExposureMask | ButtonPressMask | KeyPressMask);
   XGCValues     values;
   GC gc = XCreateGC(display, window, 0, &values);
-  put_text(display, window, gc, "Test", "9x15", infos);
+  //put_text(display, window, gc, "Test", "9x15", infos);
   XMapWindow(display, window);
 }
