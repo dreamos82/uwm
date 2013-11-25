@@ -4,6 +4,8 @@
 #define BORDER_WIDTH 5
 #define BORDER_NONE 0
 
+#define DECORATION_HEIGHT 30
+
 typedef struct {
 	int screen_num;
 	int width;

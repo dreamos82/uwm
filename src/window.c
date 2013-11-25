@@ -20,9 +20,9 @@ Window draw_window(Display *display, Window parent_window, int screen_num,int po
 	return window;
 }
 
-Window draw_window_with_name(Display *display, Window parent_window, char* name, int screen_num,int posx, int posy, int width, int height, int border_width){
+Window draw_window_with_name(Display *display, Window parent_window, char* name, int screen_num,int posx, int posy, int width, int height, int border_width, unsigned long back_color){
 	Window window;
-	window = XCreateSimpleWindow(display, parent_window, posx, posy, width, height, border_width, BlackPixel(display,screen_num),WhitePixel(display,screen_num));
+	window = XCreateSimpleWindow(display, parent_window, posx, posy, width, height, border_width, BlackPixel(display,screen_num),back_color);
 	XStoreName(display, window, name);
 	return window;
 }
@@ -56,18 +56,20 @@ void set_window_background(Display *display, GC *gc, char* image_path, Window wi
   //XPutImage(display, window, *gc, img, 0,0,0,0, 1920, 1440);*/
 }
 
-void put_text(Display* display, Window window, GC gc,char* text, char *font_name, int x, int y, ScreenInfos infos){
-  XFontStruct* font_info;  
+void put_text(Display* display, Window window, char* text, char *font_name, int x, int y, unsigned long back_color, unsigned long fore_color){
+  XFontStruct* font_info;
+  XGCValues values;	
+  GC local_gc = XCreateGC(display, window, 0, &values);
   font_info = XLoadQueryFont(display, font_name);
   if (!font_info) {
     fprintf(stderr, "XLoadQueryFont: failed loading font '%s'\n", font_name);
   }
   int sw;
   sw = XTextWidth(font_info, text, strlen(text));
-  XSetFont(display, gc, font_info->fid);
-  XSetBackground(display, gc, BlackPixel(display,0));
-  XSetForeground(display, gc, WhitePixel(display,0));
+  //XSetFont(display, gc, font_info->fid);
+  XSetBackground(display, local_gc, back_color);
+  XSetForeground(display, local_gc, fore_color);
   printf("Drawing: %s %d\n", text, strlen(text));
-  XDrawString(display, window, gc, x, y, text, strlen(text));
+  XDrawString(display, window, local_gc, x, y, text, strlen(text));
   XFlush(display);
 }

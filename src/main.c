@@ -42,9 +42,8 @@ int main(){
 	printf("Background\n");
 	XEvent local_event;
 	XFlush(display);
-	XGCValues     values;
-	GC gc = XCreateGC(display, root_window, 0, &values);
-	put_text(display, root_window, gc,"Test message", "9x15", 50,50,infos);
+	XGCValues values;	
+	put_text(display, root_window,"Test message", "9x15", 50,50,BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 	Window cur_win;
 	while(1){
 		XNextEvent(display, &local_event);
@@ -57,8 +56,10 @@ int main(){
 				char *window_name;
 				XFetchName(display, cur_win, &window_name);
 				printf("Window name: %s\n", window_name);
-				XFree(window_name);
-				XSetWindowBorderWidth(display, cur_win, BORDER_WIDTH);
+				if(!strcmp(window_name, "Parent")){
+					XSetWindowBorderWidth(display, cur_win, BORDER_WIDTH);
+				}
+				XFree(window_name);				
 			break;
 			case MapNotify:
 				printf("Map Notify\n");
@@ -68,11 +69,10 @@ int main(){
 				XFetchName(display, local_event.xmap.window, &child_name);
 				printf("Attributes: W: %d - H: %d - Name: %s\n", win_attr.width, win_attr.height, child_name);
 				if(strcmp(child_name, "Parent")){
-				  cur_win = draw_window_with_name(display,root_window, "Parent", infos.screen_num, win_attr.x, win_attr.y, win_attr.width, win_attr.height+10, 0);
-				  GC local_gc = XCreateGC(display, cur_win, 0, &values);
-				  //put_text(display, cur_win, local_gc, child_name, "9x15", win_attr.width, win_attr.height, infos);
-				  XMapWindow(display, cur_win);
-				  XReparentWindow(display,local_event.xmap.window, cur_win,0, 0);
+				  Window new_win = draw_window_with_name(display,root_window, "Parent", infos.screen_num, win_attr.x, win_attr.y, win_attr.width, win_attr.height+DECORATION_HEIGHT, 0, BlackPixel(display, infos.screen_num));				  
+				  XMapWindow(display, new_win);
+				  XReparentWindow(display,local_event.xmap.window, new_win,0, DECORATION_HEIGHT);
+				  put_text(display, new_win, child_name, "9x15", 10, 10, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 				}
 				XFree(child_name);				
 			break;
@@ -80,7 +80,7 @@ int main(){
 				printf("Event button pressed\n");
 				button_handler(local_event);
 				if(local_event.xbutton.button==Button1){
-				  Window cur_win = draw_window_with_name(display, root_window, "TestWindow",infos.screen_num, 350,350, 200,200,BORDER_NONE);
+				  Window cur_win = draw_window_with_name(display, root_window, "TestWindow",infos.screen_num, 350,350, 200,200,BORDER_NONE, WhitePixel(display, infos.screen_num));
 				  XMapWindow(display, cur_win);
 				}
 				//Window launcher_win = create_launcher(display, root_window,infos);
