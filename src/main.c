@@ -37,13 +37,13 @@ int main(){
 	printf("Test Infos: %d\n", infos.width);
 	cursor = XCreateFontCursor(display, cursor_shape);
 	XDefineCursor(display, root_window, cursor);
-	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask);
+	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask | MotionNotify);
 	//set_window_background(display,&gc, "background.png", root_window);
 	printf("Background\n");
 	XEvent local_event;
 	XFlush(display);
 	XGCValues values;	
-	put_text(display, root_window,"Test message", "9x15", 50,50,BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
+	put_text(display, root_window,"Welcome to the uselesss window manager :)", "9x15", 50,50,BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 	Window cur_win;
 	while(1){
 		XNextEvent(display, &local_event);
