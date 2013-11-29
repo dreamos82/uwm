@@ -49,3 +49,7 @@ char keyboard_handler(XEvent event, Display* display){
   int ascii_key = key_symbol - XK_A + 'A';
   //printf("Key pressed - '%c'\n", ascii_key);
 }
+
+void motion_handler(XEvent event, Display *display){
+    //printf("Motion notify event\n");
+}

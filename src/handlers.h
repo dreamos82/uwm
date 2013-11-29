@@ -3,5 +3,6 @@
 
 void button_handler(XEvent);
 char keyboard_handler(XEvent, Display *);
+void motion_handler(XEvent, Display *);
 
 #endif

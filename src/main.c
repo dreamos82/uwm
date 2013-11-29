@@ -37,7 +37,7 @@ int main(){
 	printf("Test Infos: %d\n", infos.width);
 	cursor = XCreateFontCursor(display, cursor_shape);
 	XDefineCursor(display, root_window, cursor);
-	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask | MotionNotify);
+	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask | PointerMotionMask);
 	//set_window_background(display,&gc, "background.png", root_window);
 	printf("Background\n");
 	XEvent local_event;
@@ -50,6 +50,9 @@ int main(){
 		switch(local_event.type){
 			case Expose:
 				printf("Expose window event");
+			break;
+			case MotionNotify:
+				motion_handler(local_event, display);
 			break;
 			case CreateNotify:
 				cur_win = local_event.xcreatewindow.window;
