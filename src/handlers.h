@@ -4,5 +4,6 @@
 void button_handler(XEvent);
 char keyboard_handler(XEvent, Display *);
 void motion_handler(XEvent, Display *);
+void configure_notify_handler(XEvent, Display *);
 
 #endif

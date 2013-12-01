@@ -51,5 +51,20 @@ char keyboard_handler(XEvent event, Display* display){
 }
 
 void motion_handler(XEvent event, Display *display){
-    //printf("Motion notify event\n");
+    printf("Motion notify event\n");
+    Window cur_window = event.xmotion.window;
+    int x = event.xmotion.x_root;
+    int y = event.xmotion.y_root;
+    //XMoveWindow(display, cur_window, x,y);
+}
+
+void configure_notify_handler(XEvent local_event, Display* display){
+	printf("Configure notify Event\n");
+	Window cur_win = local_event.xconfigurerequest.window;
+	XWindowAttributes win_attr;
+	char *child_name;
+	XGetWindowAttributes(display, cur_win, &win_attr);
+	XFetchName(display, local_event.xmap.window, &child_name);
+	printf("Attributes: W: %d - H: %d - Name: %s\n", win_attr.width, win_attr.height, child_name);
+	printf("");
 }

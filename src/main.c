@@ -37,7 +37,7 @@ int main(){
 	printf("Test Infos: %d\n", infos.width);
 	cursor = XCreateFontCursor(display, cursor_shape);
 	XDefineCursor(display, root_window, cursor);
-	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask | PointerMotionMask);
+	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask | Button2MotionMask);
 	//set_window_background(display,&gc, "background.png", root_window);
 	printf("Background\n");
 	XEvent local_event;
@@ -51,6 +51,9 @@ int main(){
 			case Expose:
 				printf("Expose window event");
 			break;
+			case ConfigureNotify:
+				configure_notify_handler(local_event, display);
+			break;
 			case MotionNotify:
 				motion_handler(local_event, display);
 			break;
@@ -59,10 +62,13 @@ int main(){
 				char *window_name;
 				XFetchName(display, cur_win, &window_name);
 				printf("Window name: %s\n", window_name);
-				if(!strcmp(window_name, "Parent")){
-					XSetWindowBorderWidth(display, cur_win, BORDER_WIDTH);
+				if(window_name!=NULL){
+					if(!strcmp(window_name, "Parent")){
+						printf("Adding borders\n");
+						XSetWindowBorderWidth(display, cur_win, BORDER_WIDTH);
+					}
+					XFree(window_name);
 				}
-				XFree(window_name);				
 			break;
 			case MapNotify:
 				printf("Map Notify\n");
@@ -71,13 +77,15 @@ int main(){
 				XGetWindowAttributes(display, cur_win, &win_attr);
 				XFetchName(display, local_event.xmap.window, &child_name);
 				printf("Attributes: W: %d - H: %d - Name: %s\n", win_attr.width, win_attr.height, child_name);
-				if(strcmp(child_name, "Parent")){
-				  Window new_win = draw_window_with_name(display,root_window, "Parent", infos.screen_num, win_attr.x, win_attr.y, win_attr.width, win_attr.height+DECORATION_HEIGHT, 0, BlackPixel(display, infos.screen_num));				  
-				  XMapWindow(display, new_win);
-				  XReparentWindow(display,local_event.xmap.window, new_win,0, DECORATION_HEIGHT);
-				  put_text(display, new_win, child_name, "9x15", 10, 10, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
+				if(child_name!=NULL){
+					if(strcmp(child_name, "Parent")){
+						Window new_win = draw_window_with_name(display,root_window, "Parent", infos.screen_num, win_attr.x, win_attr.y, win_attr.width, win_attr.height+DECORATION_HEIGHT, 0, BlackPixel(display, infos.screen_num));				  
+						XMapWindow(display, new_win);
+						XReparentWindow(display,local_event.xmap.window, new_win,0, DECORATION_HEIGHT);
+						put_text(display, new_win, child_name, "9x15", 10, 10, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
+					}
+					XFree(child_name);
 				}
-				XFree(child_name);				
 			break;
 			case ButtonPress:
 				printf("Event button pressed\n");
