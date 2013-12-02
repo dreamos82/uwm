@@ -68,3 +68,7 @@ void configure_notify_handler(XEvent local_event, Display* display){
 	printf("Attributes: W: %d - H: %d - Name: %s\n", win_attr.width, win_attr.height, child_name);
 	printf("");
 }
+
+void map_notify_handler(XEvent local_event, Display* display){
+	
+}
