@@ -38,3 +38,7 @@ And then you can launch it with:
 
 (With that command a new X server will be launched, and you don't need to close the running server)
 
+TODO
+----
+
+* Add a window destroy event handler
