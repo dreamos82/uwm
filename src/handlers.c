@@ -8,16 +8,22 @@
 #include <X11/X.h>
 #include <X11/Xutil.h>
 
+#include "definitions.h"
 #include "handlers.h"
+#include "window.h"
 #include "main.h"
 
-void button_handler(XEvent event){
+void button_handler(XEvent event,Display *display, ScreenInfos infos){
   switch(event.xbutton.button){
     case Button1:
       printf("Left Button pressed\n");
       break;
     case Button2:
       printf("Mid Button pressed\n");
+      if(event.xbutton.button==Button2){
+		Window cur_win = draw_window_with_name(display, event.xbutton.root, "TestWindow",infos.screen_num, 350,350, 200,200,BORDER_NONE, WhitePixel(display, infos.screen_num));
+		XMapWindow(display, cur_win);
+	}
       break;
     case Button3:
       printf("Right Button pressed\n");      
@@ -73,5 +79,7 @@ void configure_notify_handler(XEvent local_event, Display* display){
 }
 
 void map_notify_handler(XEvent local_event, Display* display){
-	
+	printf("Map Notify\n");
+	XWindowAttributes win_attr;
+	char *child_name;
 }

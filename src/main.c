@@ -90,11 +90,7 @@ int main(){
 			break;
 			case ButtonPress:
 				printf("Event button pressed\n");
-				button_handler(local_event);
-				if(local_event.xbutton.button==Button1){
-				  Window cur_win = draw_window_with_name(display, root_window, "TestWindow",infos.screen_num, 350,350, 200,200,BORDER_NONE, WhitePixel(display, infos.screen_num));
-				  XMapWindow(display, cur_win);
-				}
+				button_handler(local_event, display, infos);
 				//Window launcher_win = create_launcher(display, root_window,infos);
 			break;
 			case KeyPress:
