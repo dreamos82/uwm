@@ -6,6 +6,7 @@
 #include <X11/X.h>
 #include <X11/Xutil.h>
 #include <X11/cursorfont.h>
+
 #include <unistd.h>
 #include <errno.h>
 
@@ -16,7 +17,7 @@
 #include "definitions.h"
 #include "window.h"
 
-int main(){
+int main(){	
 	Display *display;
 	Window root_window;
 	Cursor cursor;

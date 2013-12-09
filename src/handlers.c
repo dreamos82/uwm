@@ -66,7 +66,10 @@ void configure_notify_handler(XEvent local_event, Display* display){
 	XGetWindowAttributes(display, cur_win, &win_attr);
 	XFetchName(display, local_event.xmap.window, &child_name);
 	printf("Attributes: W: %d - H: %d - Name: %s\n", win_attr.width, win_attr.height, child_name);
-	printf("");
+	if(child_name!=NULL){
+	}
+	XFree(child_name);
+	//printf("");
 }
 
 void map_notify_handler(XEvent local_event, Display* display){

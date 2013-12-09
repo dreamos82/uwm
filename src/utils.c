@@ -25,11 +25,11 @@ void print_informations(Display *display){
 }
 
 ScreenInfos get_screen_informations(Display *display){
-	ScreenInfos infos; 
+	ScreenInfos infos;
 	int screen_num = DefaultScreen(display);
 	infos.screen_num = screen_num;
 	infos.width = DisplayWidth(display,screen_num);
 	infos.height = DisplayHeight(display, screen_num);
-	infos.number_of_screens = XScreenCount(display);			
+	infos.number_of_screens = XScreenCount(display);
 	return infos;
 }
