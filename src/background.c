@@ -24,9 +24,9 @@ void set_window_background(Display *display, GC *gc, char* image_path, Window wi
   unsigned int hotspot_y;
   Pixmap my_pix;
   Screen *screen = DefaultScreenOfDisplay(display);
-  char *filename="test2.jpg";
+  printf("Set background %s\n", image_path);
   Imlib_Image img;
-  img = imlib_load_image(filename);
+  img = imlib_load_image(image_path);
   imlib_context_set_image(img);
   img_w = imlib_image_get_width();
   img_h = imlib_image_get_height();

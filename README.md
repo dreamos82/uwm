@@ -36,11 +36,13 @@ Actually there are no compilation script, so it must be done manually:
 	
 And then you can launch it with:
 
-	# xinit ./main -- :1
+	# xinit ./main [ backgroundimage.ext ] -- :1
 
+where backgroundimage is an optional argument, and specify the image to be loaded as screen background. 
+If you don't specify it, a default color will be choosed.
 (With that command a new X server will be launched, and you don't need to close the running server)
 
-WARNING: to set window background it need a file called test2.jpg into src folder (it will be fixed as soon as possible).
+WARNING: to set window background you need a file called background.jpg into src folder (it will be fixed as soon as possible).
 
 TODO
 ----

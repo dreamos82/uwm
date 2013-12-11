@@ -18,12 +18,13 @@
 #include "window.h"
 #include "background.h"
 
-int main(){	
+int main(int argc, char **argv){	
 	Display *display;
 	Window root_window;
 	Cursor cursor;
 	display = XOpenDisplay(NULL);
 	int cursor_shape = XC_arrow;
+	char *filename;
 	ScreenInfos infos = get_screen_informations(display);
 	if(display==NULL){
 		printf("Cannot connect to display\n");
@@ -35,7 +36,6 @@ int main(){
 	root_window= RootWindow(display, infos.screen_num);
 	XStoreName(display, root_window, "Root Window");
 	char root_color[] = "#1337AC";
-	set_window_color(display, root_window, root_color);
 	printf("Test Infos: %d\n", infos.width);
 	cursor = XCreateFontCursor(display, cursor_shape);
 	XDefineCursor(display, root_window, cursor);
@@ -44,8 +44,14 @@ int main(){
 	printf("Background\n");
 	XEvent local_event;
 	XFlush(display);
-	XGCValues values;	
-	set_window_background(display,&gc, "background.png", root_window);
+	XGCValues values;
+	if(argc==2){
+		
+		set_window_background(display,&gc, argv[1], root_window);
+	} else {
+		set_window_color(display, root_window, root_color);
+	}
+	
 	put_text(display, root_window,"Welcome to the uselesss window manager :)", "9x15", 50,50,BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 	Window cur_win;
 	while(1){
