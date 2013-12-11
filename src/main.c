@@ -46,7 +46,6 @@ int main(int argc, char **argv){
 	XFlush(display);
 	XGCValues values;
 	if(argc==2){
-		
 		set_window_background(display,&gc, argv[1], root_window);
 	} else {
 		set_window_color(display, root_window, root_color);

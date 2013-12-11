@@ -16,12 +16,12 @@ Actually you can find experiments on:
 
 Dependencies
 ------------
-In order to compile this program needs the following packages:
+In order to compile this program, you need the following packages installed:
 
 * libx11-dev
 * libmlib2-dev
 
-To run correctly it also need the following program installed:
+To run correctly it also needs the following program installed:
 
 * xterm
 
@@ -36,15 +36,14 @@ Actually there are no compilation script, so it must be done manually:
 	
 And then you can launch it with:
 
-	# xinit ./main [ backgroundimage.ext ] -- :1
+	# xinit ./main [ background ] -- :1
 
 where backgroundimage is an optional argument, and specify the image to be loaded as screen background. 
 If you don't specify it, a default color will be choosed.
 (With that command a new X server will be launched, and you don't need to close the running server)
 
-WARNING: to set window background you need a file called background.jpg into src folder (it will be fixed as soon as possible).
-
 TODO
 ----
 
 * Add a window destroy event handler
+* Basic configuration handling
