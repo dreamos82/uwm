@@ -16,6 +16,7 @@
 #include "handlers.h"
 #include "definitions.h"
 #include "window.h"
+#include "background.h"
 
 int main(){	
 	Display *display;
@@ -40,11 +41,11 @@ int main(){
 	XDefineCursor(display, root_window, cursor);
 	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask | Button2MotionMask);
 	GC gc;
-	set_window_background(display,&gc, "background.png", root_window);
 	printf("Background\n");
 	XEvent local_event;
 	XFlush(display);
 	XGCValues values;	
+	set_window_background(display,&gc, "background.png", root_window);
 	put_text(display, root_window,"Welcome to the uselesss window manager :)", "9x15", 50,50,BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 	Window cur_win;
 	while(1){

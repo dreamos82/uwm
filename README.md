@@ -12,12 +12,14 @@ Actually you can find experiments on:
 3. Window creation
 4. Setting color background
 5. Showing Text
+6. Setting root window background
 
 Dependencies
 ------------
 In order to compile this program needs the following packages:
 
 * libx11-dev
+* libmlib2-dev
 
 To run correctly it also need the following program installed:
 
@@ -30,13 +32,15 @@ Compile and launch
 
 Actually there are no compilation script, so it must be done manually:
 
-	# gcc main.c utils.c handlers.c window.c launcher.c error.c -lX11 -o main
+	# gcc main.c utils.c handlers.c window.c launcher.c error.c background.g -lX11 -o main
 	
 And then you can launch it with:
 
 	# xinit ./main -- :1
 
 (With that command a new X server will be launched, and you don't need to close the running server)
+
+WARNING: to set window background it need a file called test2.jpg into src folder (it will be fixed as soon as possible).
 
 TODO
 ----
