@@ -35,22 +35,19 @@ int main(int argc, char **argv){
 	infos = get_screen_informations(display);
 	root_window= RootWindow(display, infos.screen_num);
 	XStoreName(display, root_window, "Root Window");
-	char root_color[] = "#1337AC";
 	printf("Test Infos: %d\n", infos.width);
 	cursor = XCreateFontCursor(display, cursor_shape);
 	XDefineCursor(display, root_window, cursor);
 	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask | Button2MotionMask);
 	GC gc;
-	printf("Background\n");
 	XEvent local_event;
 	XFlush(display);
 	XGCValues values;
 	if(argc==2){
 		set_window_background(display,&gc, argv[1], root_window);
 	} else {
-		set_window_color(display, root_window, root_color);
+		set_window_color(display, root_window, "#1337AC");
 	}
-	
 	put_text(display, root_window,"Welcome to the uselesss window manager :)", "9x15", 50,50,BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 	Window cur_win;
 	while(1){
@@ -80,20 +77,21 @@ int main(int argc, char **argv){
 			break;
 			case MapNotify:
 				printf("Map Notify\n");
-				XWindowAttributes win_attr;
+				map_notify_handler(local_event,display, infos);
+				/*XWindowAttributes win_attr;
 				char *child_name;
 				XGetWindowAttributes(display, cur_win, &win_attr);
 				XFetchName(display, local_event.xmap.window, &child_name);
 				printf("Attributes: W: %d - H: %d - Name: %s\n", win_attr.width, win_attr.height, child_name);
 				if(child_name!=NULL){
 					if(strcmp(child_name, "Parent")){
-						Window new_win = draw_window_with_name(display,root_window, "Parent", infos.screen_num, win_attr.x, win_attr.y, win_attr.width, win_attr.height+DECORATION_HEIGHT, 0, BlackPixel(display, infos.screen_num));				  
+						Window new_win = draw_window_with_name(display,root_window, "Parent", infos.screen_num, win_attr.x, win_attr.y, win_attr.width, win_attr.height+DECORATION_HEIGHT, 0, BlackPixel(display, infos.screen_num));
 						XMapWindow(display, new_win);
 						XReparentWindow(display,local_event.xmap.window, new_win,0, DECORATION_HEIGHT);
 						put_text(display, new_win, child_name, "9x15", 10, 10, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 					}
 					XFree(child_name);
-				}
+				}*/
 			break;
 			case ButtonPress:
 				printf("Event button pressed\n");

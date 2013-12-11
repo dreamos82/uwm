@@ -40,10 +40,15 @@ And then you can launch it with:
 
 where backgroundimage is an optional argument, and specify the image to be loaded as screen background. 
 If you don't specify it, a default color will be choosed.
-(With that command a new X server will be launched, and you don't need to close the running server)
+
+(Using that command a new X instance will be launched, and you don't need to close the running server)
+
+Tested image formats:
+
+* jpg 
 
 TODO
 ----
 
 * Add a window destroy event handler
-* Basic configuration handling
+* Basic configuration handling (background color/image and default terminal)

@@ -68,18 +68,25 @@ void configure_notify_handler(XEvent local_event, Display* display){
 	printf("Configure notify Event\n");
 	Window cur_win = local_event.xconfigurerequest.window;
 	XWindowAttributes win_attr;
-	char *child_name;
-	XGetWindowAttributes(display, cur_win, &win_attr);
-	XFetchName(display, local_event.xmap.window, &child_name);
-	printf("Attributes: W: %d - H: %d - Name: %s\n", win_attr.width, win_attr.height, child_name);
-	if(child_name!=NULL){
-	}
-	XFree(child_name);
 	//printf("");
 }
 
-void map_notify_handler(XEvent local_event, Display* display){
+void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos){
 	printf("Map Notify\n");
 	XWindowAttributes win_attr;
 	char *child_name;
+	XGetWindowAttributes(display, local_event.xmap.window, &win_attr);
+	XFetchName(display, local_event.xmap.window, &child_name);
+	printf("Attributes: W: %d - H: %d - Name: %s\n", win_attr.width, win_attr.height, child_name);
+	if(child_name!=NULL){
+	  if(strcmp(child_name, "Parent")){
+		Window new_win = draw_window_with_name(display, RootWindow(display, infos.screen_num), "Parent", infos.screen_num, 
+						   win_attr.x, win_attr.y, win_attr.width, win_attr.height+DECORATION_HEIGHT, 0, 
+						   BlackPixel(display, infos.screen_num));
+		XMapWindow(display, new_win);
+		XReparentWindow(display,local_event.xmap.window, new_win,0, DECORATION_HEIGHT);
+		put_text(display, new_win, child_name, "9x15", 10, 10, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
+	  }
+	}
+	XFree(child_name);
 }
