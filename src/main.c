@@ -39,7 +39,8 @@ int main(){
 	cursor = XCreateFontCursor(display, cursor_shape);
 	XDefineCursor(display, root_window, cursor);
 	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask | Button2MotionMask);
-	//set_window_background(display,&gc, "background.png", root_window);
+	GC gc;
+	set_window_background(display,&gc, "background.png", root_window);
 	printf("Background\n");
 	XEvent local_event;
 	XFlush(display);
