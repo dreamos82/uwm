@@ -1,6 +1,7 @@
 #ifndef _main_h
 #define _main_h
 
+#define NAME "uwm"
 #define VERSION "0.1"
 
 #ifdef __FreeBSD__

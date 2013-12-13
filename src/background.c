@@ -32,7 +32,6 @@ void set_window_background(Display *display, GC *gc, char* image_path, Window wi
   img_h = imlib_image_get_height();
   my_pix = XCreatePixmap(display, window, img_w, img_h,
         DefaultDepthOfScreen(screen));
-        
   imlib_context_set_display(display);
   imlib_context_set_visual(DefaultVisualOfScreen(screen));
   imlib_context_set_colormap(DefaultColormapOfScreen(screen));

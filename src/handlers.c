@@ -53,7 +53,6 @@ char keyboard_handler(XEvent event, Display* display){
     }
   }
   int ascii_key = key_symbol - XK_A + 'A';
-  //printf("Key pressed - '%c'\n", ascii_key);
 }
 
 void motion_handler(XEvent event, Display *display){
@@ -68,7 +67,6 @@ void configure_notify_handler(XEvent local_event, Display* display){
 	printf("Configure notify Event\n");
 	Window cur_win = local_event.xconfigurerequest.window;
 	XWindowAttributes win_attr;
-	//printf("");
 }
 
 void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos){

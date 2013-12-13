@@ -52,3 +52,5 @@ TODO
 
 * Add a window destroy event handler
 * Basic configuration handling (background color/image and default terminal)
+* Scale background image
+* Finish work on text drawing functions
