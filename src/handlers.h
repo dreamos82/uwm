@@ -7,4 +7,5 @@ void motion_handler(XEvent, Display *);
 void configure_notify_handler(XEvent, Display *);
 void map_notify_handler(XEvent, Display *, ScreenInfos);
 void create_notify_handler(XEvent, Display *);
+void destroy_notify_handler(XEvent, Display *);
 #endif

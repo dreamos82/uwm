@@ -46,7 +46,7 @@ int main(int argc, char **argv){
 	if(argc==2){
 		set_window_background(display,&gc, argv[1], root_window);
 	} else {
-		set_window_color(display, root_window, "#1337AC");
+		set_window_color(display, root_window, DEFAULT_COLOR);
 	}
 	put_text(display, root_window,"Welcome to the uselesss window manager :)", "9x15", 50,50,BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 	Window cur_win;
@@ -78,6 +78,10 @@ int main(int argc, char **argv){
 			case MapNotify:
 				printf("Map Notify\n");
 				map_notify_handler(local_event,display, infos);
+			break;
+			case DestroyNotify:
+				printf("Destroy Event\n");
+				destroy_notify_handler(local_event,display);
 			break;
 			case ButtonPress:
 				printf("Event button pressed\n");

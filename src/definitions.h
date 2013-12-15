@@ -6,6 +6,8 @@
 
 #define DECORATION_HEIGHT 30
 
+#define DEFAULT_TERMINAL "xterm"
+
 typedef struct {
 	int screen_num;
 	int width;
