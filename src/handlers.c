@@ -83,7 +83,7 @@ void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos)
 						   BlackPixel(display, infos.screen_num));
 		XMapWindow(display, new_win);
 		XReparentWindow(display,local_event.xmap.window, new_win,0, DECORATION_HEIGHT);
-		XSelectInput(display, local_event.xmap.window, SubstructureNotifyMask);
+		//XSelectInput(display, local_event.xmap.window, SubstructureNotifyMask);
 		put_text(display, new_win, child_name, "9x15", 10, 10, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 	  }
 	}

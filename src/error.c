@@ -9,5 +9,5 @@
 int _X_error_handler(Display *display, XErrorEvent *event){
   char error_message[100];
   XGetErrorText(display, event->error_code, error_message, 100);
-  printf("Error occurred: %s", error_message);
+  printf("Error occurred: %s\n", error_message);
 }

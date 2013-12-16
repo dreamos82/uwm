@@ -35,7 +35,6 @@ int main(int argc, char **argv){
 	infos = get_screen_informations(display);
 	root_window= RootWindow(display, infos.screen_num);
 	XStoreName(display, root_window, "Root Window");
-	printf("Test Infos: %d\n", infos.width);
 	cursor = XCreateFontCursor(display, cursor_shape);
 	XDefineCursor(display, root_window, cursor);
 	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask | Button2MotionMask);
