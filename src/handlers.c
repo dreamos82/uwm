@@ -85,7 +85,7 @@ void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos)
 		XMapWindow(display, new_win);
 		XReparentWindow(display,local_event.xmap.window, new_win,0, DECORATION_HEIGHT);
 		set_window_item(local_event.xmap.window, new_win);
-		XSelectInput(display, local_event.xmap.window, SubstructureNotifyMask);
+		XSelectInput(display, local_event.xmap.window, StructureNotifyMask);
 		printf("Parent window id: %lu\n", new_win);
 		put_text(display, new_win, child_name, "9x15", 10, 10, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 	  }
@@ -97,9 +97,10 @@ void destroy_notify_handler(XEvent local_event, Display *display){
 	Window window = local_event.xdestroywindow.event;
 	printf("Window to destroy: %lu\n", local_event.xdestroywindow.window);
 	WindowItem item = get_window_item(local_event.xdestroywindow.window);
-	if(item.key!=-1){
+	if(item.key!=0){
 		printf("Destroying Window %lu - key: %lu\n", item.value,item.key);
 		XDestroyWindow(display, item.value);
+		destroy_window_item(item.key);
 	}
 	
 }

@@ -81,7 +81,6 @@ int main(int argc, char **argv){
 				else printf("Override False\n");
 			break;
 			case MapNotify:
-				printf("Map Notify\n");
 				map_notify_handler(local_event,display, infos);
 			break;
 			case DestroyNotify:

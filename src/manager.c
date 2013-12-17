@@ -18,7 +18,7 @@ void init_manager(){
 WindowItem get_window_item(Window window){
 	int i=0;
 	for(i=0; i<SIZE_OF_LIST; i++){
-		printf("Window id: %lu ", WindowsList[i].key);
+		//printf("Window id: %lu ", WindowsList[i].key);
 		if(WindowsList[i].key == window){
 			printf("Item Found\n");
 			return WindowsList[i];
@@ -42,5 +42,15 @@ void set_window_item(Window window, Window parent){
 		printf("Added");
 		WindowsList[i].key = window;
 		WindowsList[i].value = parent;
+	}
+}
+
+void destroy_window_item(Window window){
+	int i=0;
+	for(i=0; i<SIZE_OF_LIST; i++){
+		if(WindowsList[i].key == window){
+			WindowsList[i].key = 0;
+			WindowsList[i].value = 0;
+		}
 	}
 }
