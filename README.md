@@ -12,7 +12,8 @@ Actually you can find experiments on:
 3. Window creation
 4. Setting color background
 5. Showing Text
-6. Setting root window background
+6. Setting root window background image
+7. Decorating window.
 
 Dependencies
 ------------
@@ -50,7 +51,9 @@ Tested image formats:
 TODO
 ----
 
-* Add a window destroy event handler
+* Add a window destroy event handler (DONE)
 * Basic configuration handling (background color/image and default terminal)
 * Scale background image
 * Finish work on text drawing functions
+* 
+
