@@ -20,6 +20,7 @@ Window draw_window(Display *display, Window parent_window, int screen_num,int po
 Window draw_window_with_name(Display *display, Window parent_window, char* name, int screen_num,int posx, int posy, int width, int height, int border_width, unsigned long back_color){
 	Window window;
 	window = XCreateSimpleWindow(display, parent_window, posx, posy, width, height, border_width, BlackPixel(display,screen_num),back_color);
+	//XAddToSaveSet(display,window);
 	XStoreName(display, window, name);
 	return window;
 }

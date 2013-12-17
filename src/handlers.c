@@ -12,6 +12,7 @@
 #include "handlers.h"
 #include "window.h"
 #include "main.h"
+#include "manager.h"
 
 void button_handler(XEvent event,Display *display, ScreenInfos infos){
   switch(event.xbutton.button){
@@ -75,22 +76,30 @@ void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos)
 	char *child_name;
 	XGetWindowAttributes(display, local_event.xmap.window, &win_attr);
 	XFetchName(display, local_event.xmap.window, &child_name);
-	printf("Attributes: W: %d - H: %d - Name: %s\n", win_attr.width, win_attr.height, child_name);
+	printf("Attributes: W: %d - H: %d - Name: %s - ID %lu\n", win_attr.width, win_attr.height, child_name, local_event.xmap.window);
 	if(child_name!=NULL){
-	  if(strcmp(child_name, "Parent")){
+	  if(strcmp(child_name, "Parent") && local_event.xmap.override_redirect == False){
 		Window new_win = draw_window_with_name(display, RootWindow(display, infos.screen_num), "Parent", infos.screen_num, 
 						   win_attr.x, win_attr.y, win_attr.width, win_attr.height+DECORATION_HEIGHT, 0, 
 						   BlackPixel(display, infos.screen_num));
 		XMapWindow(display, new_win);
 		XReparentWindow(display,local_event.xmap.window, new_win,0, DECORATION_HEIGHT);
-		//XSelectInput(display, local_event.xmap.window, SubstructureNotifyMask);
+		set_window_item(local_event.xmap.window, new_win);
+		XSelectInput(display, local_event.xmap.window, SubstructureNotifyMask);
+		printf("Parent window id: %lu\n", new_win);
 		put_text(display, new_win, child_name, "9x15", 10, 10, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 	  }
 	}
 	XFree(child_name);
 }
 
-void destroy_notify_handler(XEvent local_event, Display *display){
+void destroy_notify_handler(XEvent local_event, Display *display){			
 	Window window = local_event.xdestroywindow.event;
-	XDestroyWindow(display, window);
+	printf("Window to destroy: %lu\n", local_event.xdestroywindow.window);
+	WindowItem item = get_window_item(local_event.xdestroywindow.window);
+	if(item.key!=-1){
+		printf("Destroying Window %lu - key: %lu\n", item.value,item.key);
+		XDestroyWindow(display, item.value);
+	}
+	
 }

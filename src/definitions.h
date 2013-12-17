@@ -1,10 +1,14 @@
 #ifndef _definitions_h
 #define _definitions_h
 
+#include <X11/Xlib.h>
+
 #define BORDER_WIDTH 5
 #define BORDER_NONE 0
 
 #define DECORATION_HEIGHT 30
+
+#define SIZE_OF_LIST 20
 
 #define DEFAULT_TERMINAL "xterm"
 
@@ -14,5 +18,10 @@ typedef struct {
 	int height; 
 	int number_of_screens;
 } ScreenInfos;
+
+typedef struct { 
+	Window key;
+	Window value;
+} WindowItem;
 
 #endif

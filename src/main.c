@@ -17,6 +17,7 @@
 #include "definitions.h"
 #include "window.h"
 #include "background.h"
+#include "manager.h"
 
 int main(int argc, char **argv){	
 	Display *display;
@@ -32,6 +33,7 @@ int main(int argc, char **argv){
 	}
 	XSetErrorHandler(_X_error_handler);
 	print_informations(display);
+	init_manager();
 	infos = get_screen_informations(display);
 	root_window= RootWindow(display, infos.screen_num);
 	XStoreName(display, root_window, "Root Window");
@@ -73,6 +75,10 @@ int main(int argc, char **argv){
 					}
 					XFree(window_name);
 				}
+			break;
+			case ReparentNotify:
+				if(local_event.xreparent.override_redirect == True) printf("Override True\n");
+				else printf("Override False\n");
 			break;
 			case MapNotify:
 				printf("Map Notify\n");
