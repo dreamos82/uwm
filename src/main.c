@@ -55,7 +55,7 @@ int main(int argc, char **argv){
 		XNextEvent(display, &local_event);
 		switch(local_event.type){
 			case Expose:
-				printf("Expose window event");
+				printf("Expose window event %lu\n", local_event.xexpose.window);
 			break;
 			case ConfigureNotify:
 				configure_notify_handler(local_event, display);
