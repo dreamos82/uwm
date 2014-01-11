@@ -33,3 +33,35 @@ ScreenInfos get_screen_informations(Display *display){
 	infos.number_of_screens = XScreenCount(display);
 	return infos;
 }
+
+void atom_handler(Display* display, Window window, Atom atom){
+	int result;
+	Atom property;
+	Atom actual_type_return;
+	int actual_format_return;
+	unsigned long bytes_after_return;
+	unsigned long *nitems_return;
+	unsigned char **prop_return;
+	int max_length = 32;
+	
+	if(atom!=None){
+	  printf("Wrong Atom\n");
+	  return;
+	}
+	
+	result = XGetWindowProperty(display, window, property, 0,	/* long_offset */
+			max_length,	/* long_length */
+			False,	/* delete */
+			AnyPropertyType,	/* req_type */
+			&actual_type_return,
+			&actual_format_return,
+			nitems_return, &bytes_after_return, prop_return);
+	
+	if (result != Success){
+		printf("XGetWindowProperty failed\n");
+		return;
+	}
+	printf("Actual Type: %s\n", XGetAtomName(display,actual_type_return));
+	printf("Byte after return: %ld\n", bytes_after_return);
+	printf("nitems return: %ld\n", nitems_return);
+}

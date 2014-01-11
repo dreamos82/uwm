@@ -97,9 +97,10 @@ int main(int argc, char **argv){
 				keyboard_handler(local_event, display);
 			break;
 			case ClientMessage:
-				printf("ClientMessage");
+				printf("ClientMessage\n");
 				printf("Message: %s\n", XGetAtomName(display,local_event.xclient.message_type));
 				Atom wm_state = XInternAtom(display, XGetAtomName(display,local_event.xclient.message_type), True);
+				atom_handler(display, local_event.xclient.window,wm_state);
 			break;
 			default: 
 				printf("default event %d\n", local_event.type);
