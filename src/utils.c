@@ -34,29 +34,30 @@ ScreenInfos get_screen_informations(Display *display){
 	return infos;
 }
 
-void atom_handler(Display* display, Window window, Atom atom){
+int get_property_value(Display* display, char *propname, long max_length,
+		   unsigned long *nitems_return, unsigned char **prop_return){
 	int result;
 	Atom property;
 	Atom actual_type_return;
 	int actual_format_return;
 	unsigned long bytes_after_return;
-	unsigned long *nitems_return;
-	unsigned char **prop_return;
-	int max_length = 32;
+	//int max_length = 32;
 	
-	if(atom!=None){
+	property = XInternAtom(display, propname, True);
+	
+	if(property==None){
 	  printf("Wrong Atom\n");
 	  return;
 	}
 	
-	result = XGetWindowProperty(display, window, property, 0,	/* long_offset */
+	result = XGetWindowProperty(display, DefaultRootWindow(display), property, 0,	/* long_offset */
 			max_length,	/* long_length */
 			False,	/* delete */
 			AnyPropertyType,	/* req_type */
 			&actual_type_return,
 			&actual_format_return,
 			nitems_return, &bytes_after_return, prop_return);
-	
+	printf("ATOM: problem?\n");
 	if (result != Success){
 		printf("XGetWindowProperty failed\n");
 		return;

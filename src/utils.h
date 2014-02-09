@@ -6,5 +6,6 @@
 void print_informations(Display *display);
 ScreenInfos get_screen_informations(Display * display);
 void atom_handler(Display*, Window, Atom);
+int get_property_value(Display*, char *, long, unsigned long *, unsigned char **);
 
 #endif
