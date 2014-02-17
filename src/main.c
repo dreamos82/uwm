@@ -103,7 +103,7 @@ int main(int argc, char **argv){
 				//atom_handler(display, local_event.xclient.window,wm_state);
 				unsigned long nitems_return;
 				unsigned int *prop_return;
-				get_property_value(display, XGetAtomName(display,local_event.xclient.message_type), 32, &nitems_return, (unsigned char **)&prop_return);
+				get_property_value(display, XGetAtomName(display,local_event.xclient.message_type), 64, &nitems_return, (unsigned char **)&prop_return);
 			break;
 			default: 
 				printf("default event %d\n", local_event.type);

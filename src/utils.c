@@ -42,7 +42,7 @@ int get_property_value(Display* display, char *propname, long max_length,
 	int actual_format_return;
 	unsigned long bytes_after_return;
 	//int max_length = 32;
-	
+	printf("Propname: %s\n", propname);
 	property = XInternAtom(display, propname, True);
 	
 	if(property==None){
@@ -57,12 +57,34 @@ int get_property_value(Display* display, char *propname, long max_length,
 			&actual_type_return,
 			&actual_format_return,
 			nitems_return, &bytes_after_return, prop_return);
-	printf("ATOM: problem?\n");
 	if (result != Success){
 		printf("XGetWindowProperty failed\n");
-		return;
+		return (-1);
 	}
-	printf("Actual Type: %s\n", XGetAtomName(display,actual_type_return));
+	
+	if (actual_type_return == None || actual_format_return == 0)
+	{
+		if (!nowarn)
+			fprintf(stderr, "Window is missing property %s\n", propname);
+		return (-1);
+	}
+	
+	if (bytes_after_return)
+	{
+		fprintf(stderr, "%s is too big for me\n", propname);
+		return (-1);
+	}
+
+	if (actual_format_return != 32)
+	{
+		fprintf(stderr, "%s has bad format\n", propname);
+		return (-1);
+	}
+	
+	printf("Actual Type: %s\n", XGetAtomName(display,property));
 	printf("Byte after return: %ld\n", bytes_after_return);
 	printf("nitems return: %ld\n", nitems_return);
+	printf("prop return: %s\n", *prop_return);
+
+	return (0);
 }
