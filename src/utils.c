@@ -57,15 +57,8 @@ int get_property_value(Display* display, char *propname, long max_length,
 			&actual_type_return,
 			&actual_format_return,
 			nitems_return, &bytes_after_return, prop_return);
-	if (result != Success){
+	/*if (result != Success){
 		printf("XGetWindowProperty failed\n");
-		return (-1);
-	}
-	
-	if (actual_type_return == None || actual_format_return == 0)
-	{
-		if (!nowarn)
-			fprintf(stderr, "Window is missing property %s\n", propname);
 		return (-1);
 	}
 	
@@ -79,7 +72,7 @@ int get_property_value(Display* display, char *propname, long max_length,
 	{
 		fprintf(stderr, "%s has bad format\n", propname);
 		return (-1);
-	}
+	}*/
 	
 	printf("Actual Type: %s\n", XGetAtomName(display,property));
 	printf("Byte after return: %ld\n", bytes_after_return);
