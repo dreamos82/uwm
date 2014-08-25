@@ -18,6 +18,7 @@ void button_handler(XEvent event,Display *display, ScreenInfos infos){
   switch(event.xbutton.button){
     case Button1:
       printf("Left Button pressed\n");
+      get_window_pid(display, event.xbutton.window);
       break;
     case Button2:
       printf("Mid Button pressed\n");
@@ -32,8 +33,12 @@ void button_handler(XEvent event,Display *display, ScreenInfos infos){
       char *window_name;
       if(current_window!=None){
 	XFetchName(event.xbutton.display, current_window, &window_name);
+	//XSendEvent(event.xbutton.display, current_window, false,
+	XDestroyWindow(event.xbutton.display, current_window);
+	printf("Current_Window != none");
       } else {
 	XFetchName(event.xbutton.display, event.xbutton.window, &window_name);
+	printf("Current_Window == none");
       }
       printf("Click on: %s\n", window_name);
       XFree(window_name);
@@ -99,7 +104,7 @@ void destroy_notify_handler(XEvent local_event, Display *display){
 	WindowItem item = get_window_item(local_event.xdestroywindow.window);
 	if(item.key!=0){
 		printf("Destroying Window %lu - key: %lu\n", item.value,item.key);
-		XDestroyWindow(display, item.value);
+		//XDestroyWindow(display, item.value);
 		destroy_window_item(item.key);
 	}
 	

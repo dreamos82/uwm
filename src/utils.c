@@ -3,6 +3,7 @@
 #include <X11/Xlib.h>
 #include <X11/X.h>
 #include <X11/Xutil.h>
+#include <X11/Xatom.h>
 
 #include "definitions.h"
 #include "utils.h"
@@ -32,6 +33,47 @@ ScreenInfos get_screen_informations(Display *display){
 	infos.height = DisplayHeight(display, screen_num);
 	infos.number_of_screens = XScreenCount(display);
 	return infos;
+}
+
+unsigned int get_window_pid(Display *display, Window window){
+	int result;
+	int _format;
+	unsigned long _nitems;
+	unsigned long _bytes_after;
+	unsigned char *prop_return=0;
+	unsigned int _no_items=0;
+	Window parent;
+	Window root_return;
+	Window *childrens;
+	Atom pid_atom = XInternAtom(display, "_NET_WM_PID", True);
+	Atom type;
+	if(pid_atom==None) { 
+	  printf("Pid not foudn\n");
+	  return 0;
+	} else {
+	  printf("Something found\n");
+	  if(XGetWindowProperty(display, window, pid_atom,0,1,False,XA_CARDINAL,&type, &_format, &_nitems, &_bytes_after,&prop_return) == Success){
+	    printf("Request done \n");
+	    XQueryTree(display, window, &root_return, &parent, &childrens, &_no_items);
+	    if(_no_items>0){
+	      get_window_pid(display, childrens[0]);
+	    }
+	    printf("No_items: %d\n", _no_items);
+	    if(type==None) {
+	      printf("Property Not found");
+	      printf("Format: %d\n", _format);
+	      printf("Bytes_after: %d\n", _bytes_after);
+	      return 0;
+	    }
+	    if(prop_return!=0){
+		printf("- Not zero\n");
+		printf("Propid: %d\n", *((unsigned long *)prop_return));
+	    }
+	    //unsigned long _pid= *((unsigned long *)prop_return);
+	    return 1;
+	}
+	}
+	return 0;
 }
 
 int get_property_value(Display* display, char *propname, long max_length,
