@@ -35,7 +35,7 @@ ScreenInfos get_screen_informations(Display *display){
 	return infos;
 }
 
-unsigned int get_window_pid(Display *display, Window window){
+unsigned long get_window_pid(Display *display, Window window){
 	int result;
 	int _format;
 	unsigned long _nitems;
@@ -67,7 +67,8 @@ unsigned int get_window_pid(Display *display, Window window){
 	    }
 	    if(prop_return!=0){
 		printf("- Not zero\n");
-		printf("Propid: %d\n", *((unsigned long *)prop_return));
+		printf("Propid: %lu\n", *((unsigned long *)prop_return));
+		return *((unsigned long *)prop_return);
 	    }
 	    //unsigned long _pid= *((unsigned long *)prop_return);
 	    return 1;
