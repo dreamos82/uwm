@@ -19,7 +19,7 @@ void button_handler(XEvent event,Display *display, ScreenInfos infos){
     case Button1:
       printf("Left Button pressed\n");
       unsigned long _pid = get_window_pid(display, event.xbutton.window);
-      printf("Check return value: %lu", _pid);
+      printf("Check return value: %lu\n", _pid);
       break;
     case Button2:
       printf("Mid Button pressed\n");
