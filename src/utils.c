@@ -48,18 +48,19 @@ unsigned long get_window_pid(Display *display, Window window){
 	Atom pid_atom = XInternAtom(display, "_NET_WM_PID", True);
 	Atom type;
 	if(pid_atom==None) { 
-	  printf("Pid not foudn\n");
+	  printf("Pid not found\n");
 	  return 0;
 	} else {
 	  printf("Something found\n");
 	  if(XGetWindowProperty(display, window, pid_atom,0,1,False,XA_CARDINAL,&type, &_format, &_nitems, &_bytes_after,&prop_return) == Success){
+	    int result = 0;	
 	    printf("Request done \n");
 	    XQueryTree(display, window, &root_return, &parent, &childrens, &_no_items);
 	    if(_no_items>0){
-	      get_window_pid(display, childrens[0]);
+	      result = get_window_pid(display, childrens[0]);
 	    }
 	    printf("No_items: %d\n", _no_items);
-	    if(type==None) {
+	    if(result == 0 && type==None) {
 	      printf("Property Not found");
 	      printf("Format: %d\n", _format);
 	      printf("Bytes_after: %d\n", _bytes_after);
@@ -71,7 +72,8 @@ unsigned long get_window_pid(Display *display, Window window){
 		return *((unsigned long *)prop_return);
 	    }
 	    //unsigned long _pid= *((unsigned long *)prop_return);
-	    return 1;
+	    //XFree(prop_return);
+	    return result;
 	}
 	}
 	return 0;
