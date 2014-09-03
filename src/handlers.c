@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stddef.h>
 #include <unistd.h>
+#include <signal.h>
 #include <errno.h>
 #include <X11/Xlib.h>
 #include <X11/X.h>
@@ -34,11 +35,16 @@ void button_handler(XEvent event,Display *display, ScreenInfos infos){
       char *window_name;
       if(current_window!=None){
 	XFetchName(event.xbutton.display, current_window, &window_name);
+	unsigned long _pid_kill = get_window_pid(display, event.xbutton.window);
 	//XSendEvent(event.xbutton.display, current_window, false,
 	XDestroyWindow(event.xbutton.display, current_window);
+	printf("To kill: %d", _pid_kill);
+	if(_pid_kill!=0){
+	  kill(_pid_kill, SIGKILL);
+	}
 	printf("Current_Window != none");
       } else {
-	XFetchName(event.xbutton.display, event.xbutton.window, &window_name);
+	//XFetchName(event.xbutton.display, event.xbutton.window, &window_name);
 	printf("Current_Window == none");
       }
       printf("Click on: %s\n", window_name);
