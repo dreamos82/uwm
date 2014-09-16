@@ -20,7 +20,7 @@ Dependencies
 In order to compile this program, you need the following packages installed:
 
 * libx11-dev
-* libmlib2-dev
+* libimlib2-dev
 
 To run correctly it also needs the following program installed:
 
