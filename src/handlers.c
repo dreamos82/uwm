@@ -18,27 +18,27 @@
 void button_handler(XEvent event,Display *display, ScreenInfos infos){
   switch(event.xbutton.button){
     case Button1:
-      printf("Left Button pressed\n");
+      printf("---Left Button pressed---\n");
       unsigned long _pid = get_window_pid(display, event.xbutton.window);
       printf("Check return value: %lu\n", _pid);
       break;
     case Button2:
-      printf("Mid Button pressed\n");
+      printf("---Mid Button pressed---\n");
       if(event.xbutton.button==Button2){
 		Window cur_win = draw_window_with_name(display, event.xbutton.root, "TestWindow",infos.screen_num, 350,350, 200,200,BORDER_NONE, WhitePixel(display, infos.screen_num));
 		XMapWindow(display, cur_win);
 	}
       break;
     case Button3:
-      printf("Right Button pressed\n");      
+      printf("---Right Button pressed---\n");      
       Window current_window = event.xbutton.subwindow;
       char *window_name;
       if(current_window!=None){
 	XFetchName(event.xbutton.display, current_window, &window_name);
-	unsigned long _pid_kill = get_window_pid(display, event.xbutton.window);
-	//XSendEvent(event.xbutton.display, current_window, false,
+	printf("Window name: %s - ", window_name);
+	unsigned long _pid_kill = get_window_pid(display, event.xbutton.subwindow);
 	XDestroyWindow(event.xbutton.display, current_window);
-	printf("To kill: %d", _pid_kill);
+	printf("To kill: %d -", _pid_kill);
 	if(_pid_kill!=0){
 	  kill(_pid_kill, SIGKILL);
 	}
@@ -47,10 +47,11 @@ void button_handler(XEvent event,Display *display, ScreenInfos infos){
 	//XFetchName(event.xbutton.display, event.xbutton.window, &window_name);
 	printf("Current_Window == none");
       }
-      printf("Click on: %s\n", window_name);
+      printf(" Click on: %s\n", window_name);
       XFree(window_name);
       break;
   }
+  printf("---End---\n");
 }
 
 char keyboard_handler(XEvent event, Display* display){
