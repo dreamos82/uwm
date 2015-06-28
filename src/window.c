@@ -51,7 +51,7 @@ void put_text(Display* display, Window window, char* text, char *font_name, int 
   //XSetFont(display, gc, font_info->fid);
   XSetBackground(display, local_gc, back_color);
   XSetForeground(display, local_gc, fore_color);
-  printf("Drawing: %s %d\n", text, strlen(text));
+  printf("Drawing: %s %zu\n", text, strlen(text));
   XDrawString(display, window, local_gc, x, y, text, strlen(text));
   XFlush(display);
 }

@@ -38,7 +38,7 @@ void button_handler(XEvent event,Display *display, ScreenInfos infos){
 	printf("Window name: %s - ", window_name);
 	unsigned long _pid_kill = get_window_pid(display, event.xbutton.subwindow);
 	XDestroyWindow(event.xbutton.display, current_window);
-	printf("To kill: %d -", _pid_kill);
+	printf("To kill: %ld -", _pid_kill);
 	if(_pid_kill!=0){
 	  kill(_pid_kill, SIGKILL);
 	}

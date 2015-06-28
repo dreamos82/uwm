@@ -83,6 +83,9 @@ int main(int argc, char **argv){
 			case MapNotify:
 				map_notify_handler(local_event,display, infos);
 			break;
+			case UnmapNotify: 
+				printf("UnMapNotify\n");
+			break;
 			case DestroyNotify:
 				printf("Destroy Event\n");
 				destroy_notify_handler(local_event,display);
@@ -104,6 +107,9 @@ int main(int argc, char **argv){
 				unsigned long nitems_return;
 				unsigned int *prop_return;
 				get_property_value(display, XGetAtomName(display,local_event.xclient.message_type), 64, &nitems_return, (unsigned char **)&prop_return);
+			break;
+			case MappingNotify:
+				printf("Mapping notify Even\nt");
 			break;
 			default: 
 				printf("default event %d\n", local_event.type);

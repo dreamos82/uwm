@@ -63,7 +63,7 @@ unsigned long get_window_pid(Display *display, Window window){
 	    if(result == 0 && type==None) {
 	      printf("Property Not found");
 	      printf("Format: %d\n", _format);
-	      printf("Bytes_after: %d\n", _bytes_after);
+	      printf("Bytes_after: %ld\n", _bytes_after);
 	      return 0;
 	    }
 	    if(prop_return!=0){
@@ -121,7 +121,7 @@ int get_property_value(Display* display, char *propname, long max_length,
 	
 	printf("Actual Type: %s\n", XGetAtomName(display,property));
 	printf("Byte after return: %ld\n", bytes_after_return);
-	printf("nitems return: %ld\n", nitems_return);
+	printf("nitems return: %d\n", nitems_return);
 	printf("prop return: %s\n", *prop_return);
 
 	return (0);

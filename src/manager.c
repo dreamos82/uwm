@@ -32,7 +32,7 @@ WindowItem get_window_item(Window window){
 }
 
 void set_window_item(Window window, Window parent){
-	printf("%lu\n", parent);
+	printf("In set_window_item: %lu\n", parent);
 	int i=0;
 	while(WindowsList[i].key != 0 && i<SIZE_OF_LIST){
 		printf("Cycle\n");
