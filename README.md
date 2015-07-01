@@ -48,6 +48,13 @@ Tested image formats:
 
 * jpg 
 
+Usage instruction
+-----------------
+There are very few thing that you can do using this useless window manager, here a list of what you can do:
+
+* Press 1 to launch xterm (and with xterm you can launch other programs)
+* To close a program just right click on program window decoration.
+
 TODO
 ----
 
@@ -55,5 +62,5 @@ TODO
 * Basic configuration handling (background color/image and default terminal)
 * Scale background image
 * Finish work on text drawing functions
-* 
+* Add better argument parsing.
 
