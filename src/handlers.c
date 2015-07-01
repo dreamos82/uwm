@@ -112,7 +112,7 @@ void destroy_notify_handler(XEvent local_event, Display *display){
 	WindowItem item = get_window_item(local_event.xdestroywindow.window);
 	if(item.key!=0){
 		printf("Destroying Window %lu - key: %lu\n", item.value,item.key);
-		//XDestroyWindow(display, item.value);
+		XDestroyWindow(display, item.value);
 		destroy_window_item(item.key);
 	}
 	

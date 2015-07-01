@@ -79,7 +79,7 @@ unsigned long get_window_pid(Display *display, Window window){
 	return 0;
 }
 
-int get_property_value(Display* display, char *propname, long max_length,
+int get_property_value(Display* display, Window window,char *propname, long max_length,
 		   unsigned long *nitems_return, unsigned char **prop_return){
 	int result;
 	Atom property;
@@ -87,27 +87,27 @@ int get_property_value(Display* display, char *propname, long max_length,
 	int actual_format_return;
 	unsigned long bytes_after_return;
 	//int max_length = 32;
-	printf("Propname: %s\n", propname);
+	printf("-----GET_PROPERTY_VALUE-------\n");
+	printf("\tPropname: %s\n", propname);
 	property = XInternAtom(display, propname, True);
-	
 	if(property==None){
-	  printf("Wrong Atom\n");
+	  printf("\tWrong Atom\n");
 	  return;
 	}
 	
-	result = XGetWindowProperty(display, DefaultRootWindow(display), property, 0,	/* long_offset */
-			max_length,	/* long_length */
+	result = XGetWindowProperty(display, window, property, 0,	/* long_offset */
+			(~0L),	/* long_length */
 			False,	/* delete */
 			AnyPropertyType,	/* req_type */
 			&actual_type_return,
 			&actual_format_return,
 			nitems_return, &bytes_after_return, prop_return);
-	/*if (result != Success){
-		printf("XGetWindowProperty failed\n");
+	if (result != Success){
+		printf("\tXGetWindowProperty failed\n");
 		return (-1);
-	}
+	} 
 	
-	if (bytes_after_return)
+	/*if (bytes_after_return)
 	{
 		fprintf(stderr, "%s is too big for me\n", propname);
 		return (-1);
@@ -118,11 +118,15 @@ int get_property_value(Display* display, char *propname, long max_length,
 		fprintf(stderr, "%s has bad format\n", propname);
 		return (-1);
 	}*/
-	
-	printf("Actual Type: %s\n", XGetAtomName(display,property));
-	printf("Byte after return: %ld\n", bytes_after_return);
-	printf("nitems return: %d\n", nitems_return);
-	printf("prop return: %s\n", *prop_return);
+	else {
+		printf("\tActual Type: %s\n", XGetAtomName(display,property));
+		printf("\tProperty format: %d\n", actual_format_return);
+		//printf("Actual property return: %s\n", XGetAtomName(display,actual_type_return));
+		printf("\tByte after return: %ld\n", bytes_after_return);
+		printf("\tnitems return: %d\n", *nitems_return);
+		printf("\tprop return: %s\n", prop_return[0]);
+	}
+	printf("-----END OF GET_PROPERTY_VALUE-------\n");
 
 	return (0);
 }

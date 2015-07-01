@@ -44,7 +44,8 @@ int main(int argc, char **argv){
 	XEvent local_event;
 	XFlush(display);
 	XGCValues values;
-	if(argc==2){
+	//TODO: Improve argument parser
+	if(argc>=2){
 		set_window_background(display,&gc, argv[1], root_window);
 	} else {
 		set_window_color(display, root_window, DEFAULT_COLOR);
@@ -106,7 +107,7 @@ int main(int argc, char **argv){
 				//atom_handler(display, local_event.xclient.window,wm_state);
 				unsigned long nitems_return;
 				unsigned int *prop_return;
-				get_property_value(display, XGetAtomName(display,local_event.xclient.message_type), 64, &nitems_return, (unsigned char **)&prop_return);
+				get_property_value(display, local_event.xclient.window, XGetAtomName(display,local_event.xclient.message_type), 256, &nitems_return, (unsigned char **)&prop_return);
 			break;
 			case MappingNotify:
 				printf("Mapping notify Even\nt");
@@ -118,3 +119,4 @@ int main(int argc, char **argv){
 	}
 	XCloseDisplay(display);
 }
+
