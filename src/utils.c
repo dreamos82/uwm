@@ -67,16 +67,40 @@ unsigned long get_window_pid(Display *display, Window window){
 	      return 0;
 	    }
 	    if(prop_return!=0){
-		printf("- Not zero\n");
-		printf("Propid: %lu\n", *((unsigned long *)prop_return));
-		return *((unsigned long *)prop_return);
-	    }
+			printf("- Not zero\n");
+			printf("Propid: %lu\n", *((unsigned long *)prop_return));
+			return *((unsigned long *)prop_return);
+		}
 	    //unsigned long _pid= *((unsigned long *)prop_return);
 	    //XFree(prop_return);
 	    return result;
-	}
+		}
 	}
 	return 0;
+}
+
+int window_get_name(Display *dpy, Window w, char **name) {
+  Atom prop = XInternAtom(dpy, "_NET_WM_NAME", False);
+  Atom utf8_type = XInternAtom(dpy, "UTF8_STRING", False);
+  Atom actual_type;
+  int actual_format;
+  unsigned long nitems;
+  unsigned long leftover;
+  char *data = NULL;
+  Status ret;
+
+  if (Success != (ret = XGetWindowProperty(dpy, w, prop, 0L, (long) BUFSIZ,
+        False, utf8_type, &actual_type, &actual_format, &nitems,
+        &leftover, (unsigned char **) &data))) {
+    if (BadWindow == ret)
+      return 0;
+    printf("Window %#010lx: _NET_WM_NAME unset, falling back to WM_NAME.\n", w);
+    if (!XFetchName(dpy, w, &data))
+      return 0;
+  }
+  // if (actual_type == utf8_type && actual_format == 8)
+  *name = (char *) data;
+  return 1;
 }
 
 int get_property_value(Display* display, Window window,char *propname, long max_length,
@@ -85,7 +109,10 @@ int get_property_value(Display* display, Window window,char *propname, long max_
 	Atom property;
 	Atom actual_type_return;
 	int actual_format_return;
+	Window *transient_to_return;
 	unsigned long bytes_after_return;
+	unsigned char* prop_to_return;
+	unsigned long n_items;
 	//int max_length = 32;
 	printf("-----GET_PROPERTY_VALUE-------\n");
 	printf("\tPropname: %s\n", propname);
@@ -101,11 +128,16 @@ int get_property_value(Display* display, Window window,char *propname, long max_
 			AnyPropertyType,	/* req_type */
 			&actual_type_return,
 			&actual_format_return,
-			nitems_return, &bytes_after_return, prop_return);
+			&n_items, &bytes_after_return, &prop_to_return);
 	if (result != Success){
 		printf("\tXGetWindowProperty failed\n");
 		return (-1);
 	} 
+	
+	if (actual_type_return == None) {
+		printf("\tActualTypeReturn is None\n");
+		return (-1);
+	}
 	
 	/*if (bytes_after_return)
 	{
@@ -123,8 +155,8 @@ int get_property_value(Display* display, Window window,char *propname, long max_
 		printf("\tProperty format: %d\n", actual_format_return);
 		//printf("Actual property return: %s\n", XGetAtomName(display,actual_type_return));
 		printf("\tByte after return: %ld\n", bytes_after_return);
-		printf("\tnitems return: %d\n", *nitems_return);
-		printf("\tprop return: %s\n", prop_return[0]);
+		printf("\tnitems return: %d\n", n_items);
+		printf("\tprop return: %s\n", prop_to_return);
 	}
 	printf("-----END OF GET_PROPERTY_VALUE-------\n");
 

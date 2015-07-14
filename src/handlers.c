@@ -78,18 +78,33 @@ void motion_handler(XEvent event, Display *display){
 }
 
 void configure_notify_handler(XEvent local_event, Display* display){
-	printf("Configure notify Event\n");
+	//printf("Configure notify Event\n");
 	Window cur_win = local_event.xconfigurerequest.window;
 	XWindowAttributes win_attr;
+	int event_type = local_event.xconfigurerequest.type;
+	printf("----CONFIGURE_NOTIFY_EVENT----\n");
+	printf("\tType: %d\n", event_type);
+	if(local_event.xconfigurerequest.above == None){
+		printf("\tWindow is none\n");
+	} else {
+		printf("\tWindow is not None\n");
+	}
+	printf("----------------\n");
+	//XMapWindow(local_event.xconfigurerequest.display, cur_win);
+	//XCirculateSubwindowsUp(local_event.xconfigurerequest.display, cur_win);
+	//XRaiseWindow(local_event.xconfigurerequest.display, cur_win);
 }
 
 void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos){
-	printf("Map Notify\n");
+	printf("----------Map Notify\n");
 	XWindowAttributes win_attr;
 	char *child_name;
 	XGetWindowAttributes(display, local_event.xmap.window, &win_attr);
 	XFetchName(display, local_event.xmap.window, &child_name);
-	printf("Attributes: W: %d - H: %d - Name: %s - ID %lu\n", win_attr.width, win_attr.height, child_name, local_event.xmap.window);
+	printf("\tAttributes: W: %d - H: %d - Name: %s - ID %lu\n", win_attr.width, win_attr.height, child_name, local_event.xmap.window);
+	Window trans = None;	
+	XGetTransientForHint(display, local_event.xmap.window, &trans);	
+	printf("\tIs transient: %ld\n", trans);
 	if(child_name!=NULL){
 	  if(strcmp(child_name, "Parent") && local_event.xmap.override_redirect == False){
 		Window new_win = draw_window_with_name(display, RootWindow(display, infos.screen_num), "Parent", infos.screen_num, 
@@ -99,9 +114,19 @@ void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos)
 		XReparentWindow(display,local_event.xmap.window, new_win,0, DECORATION_HEIGHT);
 		set_window_item(local_event.xmap.window, new_win);
 		XSelectInput(display, local_event.xmap.window, StructureNotifyMask);
-		printf("Parent window id: %lu\n", new_win);
+		printf("\tParent window id: %lu\n", new_win);
 		put_text(display, new_win, child_name, "9x15", 10, 10, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
-	  }
+	  } /*else {
+		  XWindowAttributes attributes;
+		  Status status = XGetWindowAttributes(display, local_event.xmap.window, &attributes);
+		  printf("\tStatus: %d\n", attributes.map_state);
+		  printf("\tOverride redirect: %d\n", attributes.override_redirect);
+		  //XMapWindow(display, trans);
+		  XFetchName(display, trans, &child_name);
+		  printf("\tChild name: %s\n", child_name);
+		  //XRaiseWindow(local_event.xmap.display, local_event.xmap.window);
+		  //XCirculateSubwindows(local_event.xmap.display, local_event.xmap.window, RaiseLowest);
+	  }*/
 	}
 	XFree(child_name);
 }

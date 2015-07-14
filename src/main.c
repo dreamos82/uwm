@@ -39,7 +39,7 @@ int main(int argc, char **argv){
 	XStoreName(display, root_window, "Root Window");
 	cursor = XCreateFontCursor(display, cursor_shape);
 	XDefineCursor(display, root_window, cursor);
-	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask |  ButtonPressMask | KeyPressMask | Button2MotionMask);
+	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask | ButtonPressMask | KeyPressMask | Button2MotionMask | PropertyChangeMask);
 	GC gc;
 	XEvent local_event;
 	XFlush(display);
@@ -50,7 +50,7 @@ int main(int argc, char **argv){
 	} else {
 		set_window_color(display, root_window, DEFAULT_COLOR);
 	}
-	put_text(display, root_window,"Welcome to the uselesss window manager :)", "9x15", 50,50,BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
+	put_text(display, root_window,"Welcome to the uselesss window manager :) :)", "9x15", 50,50,BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 	Window cur_win;
 	while(1){
 		XNextEvent(display, &local_event);
@@ -60,6 +60,12 @@ int main(int argc, char **argv){
 			break;
 			case ConfigureNotify:
 				configure_notify_handler(local_event, display);
+			break;
+			case MapRequest:
+				printf("----Map Request!-----\n");
+			break;
+			case PropertyNotify:
+				printf("Property notify event: %d\n", local_event.xproperty.state);
 			break;
 			case MotionNotify:
 				motion_handler(local_event, display);
@@ -103,11 +109,16 @@ int main(int argc, char **argv){
 			case ClientMessage:
 				printf("ClientMessage\n");
 				printf("Message: %s\n", XGetAtomName(display,local_event.xclient.message_type));
-				Atom wm_state = XInternAtom(display, XGetAtomName(display,local_event.xclient.message_type), True);
-				//atom_handler(display, local_event.xclient.window,wm_state);
-				unsigned long nitems_return;
-				unsigned int *prop_return;
-				get_property_value(display, local_event.xclient.window, XGetAtomName(display,local_event.xclient.message_type), 256, &nitems_return, (unsigned char **)&prop_return);
+				printf("Format: %d\n", local_event.xclient.format); 
+				Atom *atoms = (Atom *)local_event.xclient.data.l;
+				int i =0;
+				for(i=0; i<=5; i++){
+					printf("Data %d: %s\n", i, XGetAtomName(display, atoms[i]));
+				}
+				//Atom wm_state = XInternAtom(display, XGetAtomName(display,local_event.xclient.message_type), True);
+				//unsigned long nitems_return;
+				//unsigned char *prop_return;
+				//get_property_value(display, local_event.xclient.window, XGetAtomName(display,local_event.xclient.message_type), 256, &nitems_return, (unsigned char **)&prop_return);
 			break;
 			case MappingNotify:
 				printf("Mapping notify Even\nt");
