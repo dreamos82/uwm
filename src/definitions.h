@@ -12,6 +12,8 @@
 
 #define DEFAULT_TERMINAL "xterm"
 
+#define _NET_WM_STATE_TOGGLE 2
+
 typedef struct {
 	int screen_num;
 	int width;
