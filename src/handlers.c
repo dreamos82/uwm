@@ -159,15 +159,23 @@ void client_message_handler(XEvent local_event, Display *display){
 	XQueryTree(display, local_event.xclient.window, &root_window, &parent_window, &child_windows, &nchild);
 	printf("\tNumber of childs: %d\n", nchild);
 	XEvent new_event;
+	Atom new_atom = XInternAtom(display, "_NET_WM_STATE_ABOVE", True);
+	if(new_atom == False){
+		printf("\tDoes not exist _NET_WM_STATE");
+	}
 	printf("Creating new Atom client Message, with value: %d\n", ClientMessage);
 	new_event.xclient.type = ClientMessage;
 	new_event.xclient.serial = 0;
 	new_event.xclient.send_event = 1;
-	new_event.xclient.message_type = XInternAtom(display, "_NET_ACTIVE_WINDOW", False);
+	new_event.xclient.message_type = XInternAtom(display, "_NET_WM_STATE", False);
 	new_event.xclient.display = local_event.xclient.display;
 	new_event.xclient.window = local_event.xclient.window;
 	new_event.xclient.format = 32;
-	new_event.xclient.data.l[0] = _NET_WM_STATE_TOGGLE;
+	new_event.xclient.data.l[0] = 1;
+	new_event.xclient.data.l[1] = new_atom;
+	new_event.xclient.data.l[2] = 0;
+	new_event.xclient.data.l[3] = 0;
+	new_event.xclient.data.l[4] = 0;
 	unsigned long mask = 1 << 20 /* SubstructureRedirectMask */ | 1 << 19 /* SubstructureNotifyMask */ ;
 	XSendEvent(display, InputFocus, False, mask, &new_event);
 	XFlush(new_event.xclient.display);
