@@ -39,7 +39,7 @@ int main(int argc, char **argv){
 	XStoreName(display, root_window, "Root Window");
 	cursor = XCreateFontCursor(display, cursor_shape);
 	XDefineCursor(display, root_window, cursor);
-	XSelectInput(display, root_window, ExposureMask | SubstructureNotifyMask | ButtonPressMask | KeyPressMask | Button2MotionMask | PropertyChangeMask);
+	XSelectInput(display, root_window, EnterWindowMask | ExposureMask | SubstructureNotifyMask | ButtonPressMask | KeyPressMask | Button2MotionMask | PropertyChangeMask);
 	GC gc;
 	XEvent local_event;
 	XFlush(display);
@@ -55,6 +55,9 @@ int main(int argc, char **argv){
 	while(1){
 		XNextEvent(display, &local_event);
 		switch(local_event.type){
+			case EnterNotify:
+				printf("Enter Notify event");
+			break;
 			case Expose:
 				printf("Expose window event %lu\n", local_event.xexpose.window);
 			break;
@@ -107,33 +110,7 @@ int main(int argc, char **argv){
 				keyboard_handler(local_event, display);
 			break;
 			case ClientMessage:
-				printf("------------ClientMessage\n");
-				printf("\tMessage: %s\n", XGetAtomName(display,local_event.xclient.message_type));
-				printf("\tFormat: %d\n", local_event.xclient.format); 
-				Atom *atoms = (Atom *)local_event.xclient.data.l;
-				int i =0;
-				for(i=0; i<=5; i++){
-					printf("\t\tData %d: %s\n", i, XGetAtomName(display, atoms[i]));
-				}
-				int nchild;
-				Window *child_windows;
-				Window parent_window;
-				Window root_window;
-				XQueryTree(display, local_event.xclient.window, &root_window, &parent_window, &child_windows, &nchild);
-				printf("\tNumber of childs: %d\n", nchild);
-				XEvent new_event;
-				printf("Creating new Atom client Message, with value: %d", ClientMessage);
-				new_event.xclient.type = ClientMessage;
-				new_event.xclient.serial = 0;
-				new_event.xclient.send_event = 1;
-				new_event.xclient.message_type = XInternAtom(display, "_NET_ACTIVE_WINDOW", False);
-				new_event.xclient.display = local_event.xclient.display;
-				new_event.xclient.window = local_event.xclient.window;
-				new_event.xclient.format = 32;
-				new_event.xclient.data.l[0] = _NET_WM_STATE_TOGGLE;
-				unsigned long mask = 1 << 20 /* SubstructureRedirectMask */ | 1 << 19 /* SubstructureNotifyMask */ ;
-				XSendEvent(display, root_window, False, mask, &new_event);
-				XFlush(new_event.xclient.display);
+				client_message_handler(local_event, display);
 				//Atom wm_state = XInternAtom(display, XGetAtomName(display,local_event.xclient.message_type), True);
 				//unsigned long nitems_return;
 				//unsigned char *prop_return;
