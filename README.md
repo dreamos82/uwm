@@ -35,9 +35,24 @@ Actually there are no compilation script, so it must be done manually:
 
 	# gcc main.c utils.c handlers.c window.c launcher.c error.c background.c manager.c -lImlib2 -lX11 -o main
 	
-And then you can launch it with:
+
+And then you can launch it in two different ways: 
+
+* The first is using xephyr,  a tool that launch a X server instance in a window. After installing it (check your distro documentation) 
+type: 
+	
+	# Xephyr -screen 1024x768 -br :1
+	
+Where -screen XxY is the desired resolution. And then you can launch the Window Manager with the following command:
+
+	# DISPLAY=:1 ./main 452258.jpg
+	
+This method is very useful if you want to debug the window manager.
+* The second method is just launching a new server instance, using the following command:
 
 	# xinit ./main [ background ] -- :1
+	
+and then you can move between X instances using Ctrl + Alt + Fx
 
 where backgroundimage is an optional argument, and specify the image to be loaded as screen background. 
 If you don't specify it, a default color will be choosed.
