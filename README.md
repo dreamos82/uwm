@@ -44,7 +44,7 @@ And then you can launch it in two different ways:
 	
 Where -screen XxY is the desired resolution. And then you can launch the Window Manager with the following command:
 
-	# DISPLAY=:1 ./main 452258.jpg
+	# DISPLAY=:1 ./main [ background ]
 	
 This method is very useful if you want to debug the window manager.
 
@@ -54,7 +54,6 @@ This method is very useful if you want to debug the window manager.
 	
 and then you can move between X instances using Ctrl + Alt + Fx
 
-where backgroundimage is an optional argument, and specify the image to be loaded as screen background. 
 If you don't specify it, a default color will be choosed.
 
 (Using that command a new X instance will be launched, and you don't need to close the running server)
@@ -62,6 +61,8 @@ If you don't specify it, a default color will be choosed.
 Tested image formats:
 
 * jpg 
+
+Please notice that the background argument is optional. 
 
 Usage instruction
 -----------------
@@ -78,4 +79,5 @@ TODO
 * Scale background image
 * Finish work on text drawing functions
 * Add better argument parsing.
+* Fix issue #2
 
