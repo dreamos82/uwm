@@ -54,7 +54,7 @@ This method is very useful if you want to debug the window manager.
 	
 and then you can move between X instances using Ctrl + Alt + Fx
 
-If you don't specify it, a default color will be choosed.
+[ background ] is optional, and it specifies the background image. If you don't specify it, a default color will be choosed.
 
 (Using that command a new X instance will be launched, and you don't need to close the running server)
 
