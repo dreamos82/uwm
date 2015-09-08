@@ -30,6 +30,7 @@ void set_window_background(Display *display, GC *gc, char* image_path, Window wi
   imlib_context_set_image(img);
   img_w = imlib_image_get_width();
   img_h = imlib_image_get_height();
+  imlib_blend_image_onto_image(img,0,0,0, img_w, img_h, 0,0, infos.width,infos.height);
   my_pix = XCreatePixmap(display, window, img_w, img_h,
         DefaultDepthOfScreen(screen));
   imlib_context_set_display(display);
