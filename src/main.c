@@ -60,6 +60,7 @@ int main(int argc, char **argv){
 			break;
 			case Expose:
 				printf("Expose window event %lu\n", local_event.xexpose.window);
+                                expose_handler(local_event, display);
 			break;
 			case ConfigureNotify:
 				configure_notify_handler(local_event, display);

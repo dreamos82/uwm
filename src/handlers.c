@@ -69,6 +69,15 @@ char keyboard_handler(XEvent event, Display* display){
   int ascii_key = key_symbol - XK_A + 'A';
 }
 
+void expose_handler(XEvent event, Display *display){
+    printf("----EXPOSE EVENT----\n");
+    printf("\tsend_event: %d", event.xexpose.send_event);
+    printf("\tcoords: x: %d, y: %d\n", event.xexpose.x, event.xexpose.y); 
+    printf("\tsize: w: %d, h: %d\n", event.xexpose.width, event.xexpose.height);
+    printf("--------------------\n");
+    Window window = event.xexpose.window;
+}
+
 void motion_handler(XEvent event, Display *display){
     printf("Motion notify event\n");
     Window cur_window = event.xmotion.window;
