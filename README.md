@@ -28,6 +28,12 @@ To run correctly it also needs the following program installed:
 
 (since it is the only program launched by this useless window manager)
 
+If you want to use Xephyr to test the window manager you need the package: 
+
+* xserver-xephyr (ubuntu) 
+
+installed.
+
 Compile and launch
 ------------------
 
