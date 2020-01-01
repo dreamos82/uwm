@@ -114,6 +114,12 @@ void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos)
 	Window trans = None;	
 	XGetTransientForHint(display, local_event.xmap.window, &trans);	
 	printf("\tIs transient: %ld\n", trans);
+	if(trans != NULL){
+			printf("\t\tIs Trans\n");
+			XWMHints *hints = XGetWMHints(display, trans);
+			printf("Hints: %d\n", hints->input);
+			XSetInputFocus(display, trans, RevertToParent, CurrentTime);
+	}
 	if(child_name!=NULL){
 	  if(strcmp(child_name, "Parent") && local_event.xmap.override_redirect == False){
 		Window new_win = draw_window_with_name(display, RootWindow(display, infos.screen_num), "Parent", infos.screen_num, 
