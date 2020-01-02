@@ -47,7 +47,7 @@ Actually there are no compilation script, so it must be done manually:
 
 And then you can launch it in two different ways: 
 
-1) The first is using xephyr,  a tool that launch a X server instance in a window. After installing it (check your distro documentation) type
+1. The first is using xephyr,  a tool that launch a X server instance in a window. After installing it (check your distro documentation) type
 
 ```console
 	Xephyr -screen 1024x768 -br :
@@ -61,7 +61,7 @@ Where -screen XxY is the desired resolution. And then you can launch the Window 
 
 This method is very useful if you want to debug the window manager.
 
-2) The second method is just launching a new server instance, using the following command:
+2. The second method is just launching a new server instance, using the following command:
 
 ```console
 	xinit ./main [ background ] -- :1
