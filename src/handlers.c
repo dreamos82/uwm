@@ -57,17 +57,17 @@ void button_handler(XEvent event,Display *display, ScreenInfos infos){
 
 char keyboard_handler(XEvent event, Display* display){
   int keysyms_per_keycode_return;
-  KeySym key_symbol = XGetKeyboardMapping(display,event.xkey.keycode,1, &keysyms_per_keycode_return);
+  KeySym *key_symbol = XGetKeyboardMapping(display,event.xkey.keycode,1, &keysyms_per_keycode_return);
   if(XLookupKeysym(&event.xkey, 0)== XK_1){
     printf("ci sono\n");
     int pid = fork();
     if(pid==0) {      
-	if(execlp(DEFAULT_TERMINAL, DEFAULT_TERMINAL, "-ut", 0)==-1){
-	  printf("%s", strerror(errno));
-	}
+		if(execlp(DEFAULT_TERMINAL, DEFAULT_TERMINAL, "-ut", 0)==-1){
+		  printf("%s", strerror(errno));
+		}
     }
   }
-  int ascii_key = key_symbol - XK_A + 'A';
+  int ascii_key = *key_symbol - XK_A + 'A';
 }
 
 void expose_handler(XEvent event, Display *display){
