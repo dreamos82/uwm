@@ -9,5 +9,5 @@ void atom_handler(Display*, Window, Atom);
 int get_property_value(Display*, Window, char *, long, unsigned long *, unsigned char **);
 unsigned long get_window_pid(Display *, Window);
 int window_get_name(Display *,Window, char **);
-
+unsigned long get_window_pid(Display *display, Window window);
 #endif

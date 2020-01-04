@@ -14,6 +14,7 @@
 #include "window.h"
 #include "main.h"
 #include "manager.h"
+#include "utils.h"
 
 void button_handler(XEvent event,Display *display, ScreenInfos infos){
   switch(event.xbutton.button){
@@ -114,7 +115,7 @@ void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos)
 	Window trans = None;	
 	XGetTransientForHint(display, local_event.xmap.window, &trans);	
 	printf("\tIs transient: %ld\n", trans);
-	if(trans != NULL){
+	if(trans != None){
 			printf("\t\tIs Trans\n");
 			XWMHints *hints = XGetWMHints(display, trans);
 			printf("Hints: %d\n", hints->input);

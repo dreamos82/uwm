@@ -119,7 +119,7 @@ int get_property_value(Display* display, Window window,char *propname, long max_
 	property = XInternAtom(display, propname, True);
 	if(property==None){
 	  printf("\tWrong Atom\n");
-	  return;
+	  return None;
 	}
 	
 	result = XGetWindowProperty(display, window, property, 0,	/* long_offset */
