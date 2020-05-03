@@ -47,7 +47,7 @@ Actually there are no compilation script, so it must be done manually:
 
 And then you can launch it in two different ways: 
 
-###Using Xephyr
+### Using Xephyr
 1. The first is using xephyr,  a tool that launch a X server instance in a window. After installing it (check your distro documentation) type
 
 ```console
@@ -59,7 +59,7 @@ Where -screen XxY is the desired resolution. And then you can launch the Window 
 	DISPLAY=:1 ./main [ background ]
 
 ```
-###Launching Full screen
+### Launching Full screen
 This method is very useful if you want to debug the window manager.
 
 2. The second method is just launching a new server instance, using the following command:
