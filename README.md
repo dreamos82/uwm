@@ -59,8 +59,10 @@ Where -screen XxY is the desired resolution. And then you can launch the Window 
 	DISPLAY=:1 ./main [ background ]
 
 ```
-### Launching Full screen
+
 This method is very useful if you want to debug the window manager.
+
+### Launching Full screen
 
 2. The second method is just launching a new server instance, using the following command:
 
