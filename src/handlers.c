@@ -15,18 +15,24 @@
 #include "main.h"
 #include "manager.h"
 #include "utils.h"
+#include "launcher.h"
+//#include "icons.h"
 
 void button_handler(XEvent event,Display *display, ScreenInfos infos){
   switch(event.xbutton.button){
     case Button1:
       printf("---Left Button pressed---\n");
       unsigned long _pid = get_window_pid(display, event.xbutton.window);
+	  char *child_name;
+	  XFetchName(display, event.xbutton.subwindow, &child_name);
+	  printf("Window name: %s\n", child_name);
       printf("Check return value: %lu\n", _pid);
+      printf("Coordinates: x=%d - y=%d\n", event.xbutton.x, event.xbutton.y);
       break;
     case Button2:
       printf("---Mid Button pressed---\n");
       if(event.xbutton.button==Button2){
-		Window cur_win = draw_window_with_name(display, event.xbutton.root, "TestWindow",infos.screen_num, 350,350, 200,200,BORDER_NONE, WhitePixel(display, infos.screen_num));
+		Window cur_win = draw_window_with_name(display, event.xbutton.root, "TestWindow",infos.screen_num, 350,350, 200,20,BORDER_NONE, WhitePixel(display, infos.screen_num));
 		XMapWindow(display, cur_win);
 	}
       break;
@@ -55,11 +61,10 @@ void button_handler(XEvent event,Display *display, ScreenInfos infos){
   printf("---End---\n");
 }
 
-char keyboard_handler(XEvent event, Display* display){
+char keyboard_handler(XEvent event, Display* display, ScreenInfos infos){
   int keysyms_per_keycode_return;
   KeySym *key_symbol = XGetKeyboardMapping(display,event.xkey.keycode,1, &keysyms_per_keycode_return);
   if(XLookupKeysym(&event.xkey, 0)== XK_1){
-    printf("ci sono\n");
     int pid = fork();
     if(pid==0) {      
 		if(execlp(DEFAULT_TERMINAL, DEFAULT_TERMINAL, "-ut", 0)==-1){
@@ -67,6 +72,10 @@ char keyboard_handler(XEvent event, Display* display){
 		}
     }
   }
+  if(XLookupKeysym(&event.xkey, 0)== XK_2){
+	create_launcher(display, event.xkey.root, infos);
+  }
+
   int ascii_key = *key_symbol - XK_A + 'A';
 }
 
@@ -131,7 +140,9 @@ void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos)
 		set_window_item(local_event.xmap.window, new_win);
 		XSelectInput(display, local_event.xmap.window, StructureNotifyMask);
 		printf("\tParent window id: %lu\n", new_win);
-		put_text(display, new_win, child_name, "9x15", 10, 10, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
+		put_text(display, new_win, child_name, "9x15", 40, 10, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
+		draw_controls(display, new_win, 5, 5, 20, 20, BlackPixel(display, infos.screen_num), WhitePixel(display, infos.screen_num));
+		//get_system_icon("default.ico", display, new_win);
 	  } /*else {
 		  XWindowAttributes attributes;
 		  Status status = XGetWindowAttributes(display, local_event.xmap.window, &attributes);

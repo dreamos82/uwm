@@ -10,6 +10,7 @@
 #include "definitions.h"
 #include "window.h"
 #include "utils.h"
+#include "icons.h"
 
 Window draw_window(Display *display, Window parent_window, int screen_num,int posx, int posy, int width, int height, int border_width){
 	Window window;
@@ -36,6 +37,18 @@ void set_window_color(Display *display, Window window, char* root_color){
 	XAllocColor(display, colormap, &color);
 	XSetWindowBackground(display, window, color.pixel);
 	XClearWindow(display, window);
+}
+
+void draw_controls(Display* display, Window window, int x, int y, int width, int height, unsigned long back_color, unsigned long fore_color){
+	Window button_window; 
+	button_window = XCreateSimpleWindow(display, window, x, y, width, height, 1, WhitePixel(display, 0), WhitePixel(display, 0));
+	XStoreName(display, button_window, "QuitButton");
+	XGCValues values; 
+	GC local_gc = XCreateGC(display, button_window, 0, &values);
+	XSetBackground(display, local_gc, BlackPixel(display, 0));
+	XSetForeground(display, local_gc, BlackPixel(display, 0));
+	XFillRectangle(display, button_window, local_gc, x, y, width, height);
+	XMapWindow(display, button_window);
 }
 
 void put_text(Display* display, Window window, char* text, char *font_name, int x, int y, unsigned long back_color, unsigned long fore_color){

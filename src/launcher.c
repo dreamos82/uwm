@@ -11,7 +11,7 @@
 #include "launcher.h"
 
 void create_launcher(Display *display, Window parent_window, ScreenInfos infos){
-  Window window = draw_window_with_name(display, parent_window, "Application Launcher",infos.screen_num, infos.width/2, infos.height/2, 100, 30,10, WhitePixel(display, infos.screen_num));
+  Window window = draw_window_with_name(display, parent_window, "Application Launcher",infos.screen_num, infos.width/2, infos.height/2, 300, 150, 30, WhitePixel(display, infos.screen_num));
   XSelectInput(display, window, ExposureMask | ButtonPressMask | KeyPressMask);
   XGCValues     values;
   GC gc = XCreateGC(display, window, 0, &values);

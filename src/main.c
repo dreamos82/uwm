@@ -32,6 +32,7 @@ int main(int argc, char **argv){
 		return -1;
 	}
 	XSetErrorHandler(_X_error_handler);
+	XSetIOErrorHandler(_X_io_error_handler);
 	print_informations(display);
 	init_manager();
 	infos = get_screen_informations(display);
@@ -108,7 +109,7 @@ int main(int argc, char **argv){
 			break;
 			case KeyPress:
 				printf("Keyboard key pressed\n");
-				keyboard_handler(local_event, display);
+				keyboard_handler(local_event, display, infos);
 			break;
 			case ClientMessage:
 				client_message_handler(local_event, display);

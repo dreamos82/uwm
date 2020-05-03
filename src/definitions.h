@@ -14,6 +14,8 @@
 
 #define _NET_WM_STATE_TOGGLE 2
 
+#define ERROR_STRING_SIZE 100
+
 typedef struct {
 	int screen_num;
 	int width;
