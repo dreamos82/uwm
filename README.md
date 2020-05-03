@@ -51,7 +51,7 @@ And then you can launch it in two different ways:
 1. The first is using xephyr,  a tool that launch a X server instance in a window. After installing it (check your distro documentation) type
 
 ```console
-	Xephyr -screen 1024x768 -br :
+	Xephyr -screen 1024x768 -br :1
 ```
 Where -screen XxY is the desired resolution. And then you can launch the Window Manager with the following command:
 
