@@ -16,7 +16,7 @@
 #include "manager.h"
 #include "utils.h"
 #include "launcher.h"
-//#include "icons.h"
+#include "icons.h"
 
 void button_handler(XEvent event,Display *display, ScreenInfos infos){
   switch(event.xbutton.button){
@@ -140,9 +140,9 @@ void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos)
 		set_window_item(local_event.xmap.window, new_win);
 		XSelectInput(display, local_event.xmap.window, StructureNotifyMask);
 		printf("\tParent window id: %lu\n", new_win);
-		put_text(display, new_win, child_name, "9x15", 40, 10, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
+		put_text(display, new_win, child_name, "9x15", 40, 15, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
 		draw_controls(display, new_win, 5, 5, 20, 20, BlackPixel(display, infos.screen_num), WhitePixel(display, infos.screen_num));
-		//get_system_icon("default.ico", display, new_win);
+		get_system_icon("default.ico", display, new_win);
 	  } /*else {
 		  XWindowAttributes attributes;
 		  Status status = XGetWindowAttributes(display, local_event.xmap.window, &attributes);

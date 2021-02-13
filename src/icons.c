@@ -9,7 +9,6 @@
 #include "utils.h"
 
 void get_system_icon(char* icon_name, Display *display, Window win){
-		printf("Placeholder");
 		unsigned int img_h;
 		unsigned int img_w;
 		unsigned int hotspot_x;
