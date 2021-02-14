@@ -43,7 +43,7 @@ void draw_controls(Display* display, Window window, int x, int y, int width, int
 	Window button_window; 
 	button_window = XCreateSimpleWindow(display, window, x, y, width, height, 1, WhitePixel(display, 0), WhitePixel(display, 0));
 
-    get_system_icon("default.ico", display, button_window);
+    draw_application_icon("default.ico", display, button_window, 5, 5);
 	/*XStoreName(display, button_window, "QuitButton");
 	XGCValues values; 
 	GC local_gc = XCreateGC(display, button_window, 0, &values);

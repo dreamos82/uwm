@@ -6,7 +6,7 @@
 #define BORDER_WIDTH 5
 #define BORDER_NONE 0
 
-#define DECORATION_HEIGHT 30
+#define DECORATION_HEIGHT 35
 
 #define SIZE_OF_LIST 20
 
