@@ -41,7 +41,7 @@ Actually there are no compilation script, so it must be done manually:
 
 	
 ```console
-	gcc main.c utils.c handlers.c window.c launcher.c error.c background.c manager.c -lImlib2 -lX11 -o main
+	gcc main.c utils.c handlers.c icons.c window.c launcher.c error.c background.c manager.c -lImlib2 -lX11 -o main
 ```
 	
 
