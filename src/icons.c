@@ -30,10 +30,9 @@ void get_system_icon(char* icon_name, Display *display, Window win){
 	imlib_context_set_colormap(DefaultColormapOfScreen(screen));
 	imlib_context_set_drawable(my_pix);
 	imlib_render_image_on_drawable(0, 0);
-
-    XSetWindowBackgroundPixmap(display, win, my_pix);
-    XClearWindow(display, win);
-    XFreePixmap(display, my_pix);
-    imlib_free_image();
+	XSetWindowBackgroundPixmap(display, win, my_pix);
+	XClearWindow(display, win);
+	XFreePixmap(display, my_pix);
+	imlib_free_image();
 }
 
