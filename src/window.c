@@ -21,10 +21,10 @@ Window draw_window(Display *display, Window parent_window, int screen_num,int po
 Window draw_window_with_name(Display *display, Window parent_window, char* name, int screen_num,int posx, int posy, int width, int height, int border_width, unsigned long back_color){
 	Window window;
 	window = XCreateSimpleWindow(display, parent_window, posx, posy, width, height, border_width, BlackPixel(display,screen_num),back_color);
-	//XAddToSaveSet(display,window);
 	XStoreName(display, window, name);
 	return window;
 }
+
 void set_window_input_mask(Display *display, Window window, long event_mask){
 	XSelectInput(display, window, event_mask);
 }
@@ -42,12 +42,14 @@ void set_window_color(Display *display, Window window, char* root_color){
 void draw_controls(Display* display, Window window, int x, int y, int width, int height, unsigned long back_color, unsigned long fore_color){
 	Window button_window; 
 	button_window = XCreateSimpleWindow(display, window, x, y, width, height, 1, WhitePixel(display, 0), WhitePixel(display, 0));
-	XStoreName(display, button_window, "QuitButton");
+
+    get_system_icon("default.ico", display, button_window);
+	/*XStoreName(display, button_window, "QuitButton");
 	XGCValues values; 
 	GC local_gc = XCreateGC(display, button_window, 0, &values);
 	XSetBackground(display, local_gc, BlackPixel(display, 0));
 	XSetForeground(display, local_gc, BlackPixel(display, 0));
-	XFillRectangle(display, button_window, local_gc, x, y, width, height);
+	XFillRectangle(display, button_window, local_gc, x, y, width, height);*/
 	XMapWindow(display, button_window);
 }
 

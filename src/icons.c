@@ -31,18 +31,28 @@ void get_system_icon(char* icon_name, Display *display, Window win){
 	  	img_w = imlib_image_get_width();
 		img_h = imlib_image_get_height();
 		printf("Img size: %d - %d\n", img_w, img_h);
-		imlib_blend_image_onto_image(img,0,0,0, img_w, img_h, 0,0, infos.width,infos.height);
+		//imlib_blend_image_onto_image(img,0,0,0, img_w, img_h, 0,0, infos.width,infos.height);
 		Pixmap my_pix;
 		my_pix = XCreatePixmap(display, win, img_w, img_h, DefaultDepthOfScreen(screen));
 		imlib_context_set_display(display);
 		imlib_context_set_visual(DefaultVisualOfScreen(screen));
 		imlib_context_set_colormap(DefaultColormapOfScreen(screen));
 		imlib_context_set_drawable(my_pix);
+//        imlib_context_set_cliprect(0,0,img_w,img_h);
 		imlib_render_image_on_drawable(0, 0);
- 
-		XSizeHints* win_size_hints;
+
+        XSetWindowBackgroundPixmap(display, win, my_pix);
+        XClearWindow(display, win);
+
+        while (XPending(display)) {
+            XEvent ev;
+            XNextEvent(display, &ev);
+        }
+        XFreePixmap(display, my_pix);
+        imlib_free_image();
+/*		XSizeHints* win_size_hints;
 		XWMHints* win_hints;
-		int return_code;
+		int return_code;*/
 /*		return_code = XReadBitmapFile(display, win,
                          filename,
                          &width, &height,
@@ -67,7 +77,7 @@ void get_system_icon(char* icon_name, Display *display, Window win){
 		        break;
 		}*/
 
-		return_code = XStringListToTextProperty(&icon_name,
+/*		return_code = XStringListToTextProperty(&icon_name,
                                    1,
                                    &icon_name_property);
 		if(return_code == 0) {
@@ -83,26 +93,25 @@ void get_system_icon(char* icon_name, Display *display, Window win){
 	    win_hints->icon_pixmap = my_pix;
     	win_hints->initial_state = IconicState;
 	    win_hints->icon_x = 0;
-    	win_hints->icon_y = 0;
+    	win_hints->icon_y = 0;*/
 
 	    /* pass the hints to the window manager. */
-	    XSetWMHints(display, win, win_hints);
+//	    XSetWMHints(display, win, win_hints);
 
     	/* finally, we can free the WM hints structure. */
-		GC gc;
-		gc = XCreateGC(display, win, 0, NULL);
+//		GC gc;
+//		gc = XCreateGC(display, win, 0, NULL);
 		//XPutImage(display, win, gc, 
- 	   	XSetBackground(display, gc, WhitePixel(display, DefaultScreen(display)));	
+// 	   	XSetBackground(display, gc, WhitePixel(display, DefaultScreen(display)));	
 		//WhitePixel(display, DefaultScreen(display));
 
-		XCopyPlane(display, my_pix, win, gc,
+/*		XCopyPlane(display, my_pix, win, gc,
                     0, 0,
                     30, 30,
                     0, 0,
-                    1);	
+                    1);	*/
 	
-	    XFree(win_hints);
-	XFlush(display);
-	
+//	    XFree(win_hints);
+//  XFlush(display);
 }
 
