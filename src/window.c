@@ -42,7 +42,6 @@ void set_window_color(Display *display, Window window, char* root_color){
 void draw_controls(Display* display, Window window, int x, int y, int width, int height, unsigned long back_color, unsigned long fore_color){
 	Window button_window; 
 	button_window = XCreateSimpleWindow(display, window, x, y, width, height, 1, WhitePixel(display, 0), WhitePixel(display, 0));
-
     draw_application_icon("default.ico", display, button_window, 5, 5);
 	/*XStoreName(display, button_window, "QuitButton");
 	XGCValues values; 
