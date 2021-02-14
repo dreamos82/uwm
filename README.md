@@ -88,6 +88,8 @@ There are very few thing that you can do using this useless window manager, here
 * Press 1 to launch xterm (and with xterm you can launch other programs)
 * To close a program just right click on program window decoration.
 
+You need to create a 30x30 default.bmp file in the main project folder (it will be fixed in the future)
+
 TODO
 ----
 
