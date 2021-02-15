@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := release
 
 ### Vars
-APPLICATION := uwf
+APPLICATION := uwm
 COMMIT_SHA=$(shell git rev-parse --short HEAD)
 VERSION ?= $(COMMIT_SHA)
 BUILD_DIR=release-${VERSION}
@@ -11,7 +11,7 @@ SRCS=main.c utils.c handlers.c icons.c window.c launcher.c error.c background.c 
 
 .PHONY: linux-amd64
 linux-amd64:
-	gcc ${SRCS} ${INCLUDES} -o ${APPLICATION}
+	gcc ${SRCS} ${INCLUDES} -o $(BUILD_DIR)/${APPLICATION}
 
 .PHONY: setup
 setup: clean-rel
