@@ -37,27 +37,26 @@ installed.
 Compile and launch
 ------------------
 
-Actually there are no compilation script, so it must be done manually:
-
-	
 ```console
-	gcc main.c utils.c handlers.c icons.c window.c launcher.c error.c background.c manager.c -lImlib2 -lX11 -o main
+    cd src
+    make
 ```
-	
 
-And then you can launch it in two different ways: 
+You'll find a release-TAG folder with the binary inside \
+And then you can launch it in two different ways:
 
 ### Using Xephyr
+
 1. The first is using xephyr,  a tool that launch a X server instance in a window. After installing it (check your distro documentation) type
 
 ```console
-	Xephyr -screen 1024x768 -br :1
+    Xephyr -screen 1024x768 -br :1
 ```
+
 Where -screen XxY is the desired resolution. And then you can launch the Window Manager with the following command:
 
 ```console
-	DISPLAY=:1 ./main [ background ]
-
+    DISPLAY=:1 ./uwf [ background ]
 ```
 
 This method is very useful if you want to debug the window manager.
@@ -67,8 +66,9 @@ This method is very useful if you want to debug the window manager.
 2. The second method is just launching a new server instance, using the following command:
 
 ```console
-	xinit ./main [ background ] -- :1
-```	
+    xinit ./uwf [ background ] -- :1
+```
+
 and then you can move between X instances using Ctrl + Alt + Fx
 
 [ background ] is optional, and it specifies the background image. If you don't specify it, a default color will be choosed.
@@ -77,7 +77,7 @@ and then you can move between X instances using Ctrl + Alt + Fx
 
 Tested image formats:
 
-* jpg 
+* jpg
 
 Please notice that the background argument is optional. 
 
@@ -98,5 +98,4 @@ TODO
 * Scale background image
 * Finish work on text drawing functions
 * Add better argument parsing.
-* Fix issue #2
-
+* Fix issue #2 (DONE)
