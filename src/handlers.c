@@ -141,7 +141,7 @@ void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos)
             XSelectInput(display, local_event.xmap.window, StructureNotifyMask);
             printf("\tParent window id: %lu\n", new_win);
             //draw_controls(display, new_win, 5, 5, 20, 20, BlackPixel(display, infos.screen_num), WhitePixel(display, infos.screen_num));
-            draw_application_icon("../default.bmp", display, new_win, 0,0);
+            draw_application_icon("../../default.bmp", display, new_win, 0,0);
             put_text(display, new_win, child_name, "9x15", 50, 15, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
             //get_system_icon("default.ico", display, new_win);
         } /*else {
