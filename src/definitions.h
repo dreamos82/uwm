@@ -17,15 +17,15 @@
 #define ERROR_STRING_SIZE 100
 
 typedef struct {
-	int screen_num;
-	int width;
-	int height; 
-	int number_of_screens;
+    int screen_num;
+    int width;
+    int height; 
+    int number_of_screens;
 } ScreenInfos;
 
 typedef struct { 
-	Window key;
-	Window value;
+    Window key;
+    Window value;
 } WindowItem;
 
 #endif
