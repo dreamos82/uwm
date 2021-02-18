@@ -56,7 +56,7 @@ And then you can launch it in two different ways:
 Where -screen XxY is the desired resolution. And then you can launch the Window Manager with the following command:
 
 ```console
-    DISPLAY=:1 ./uwf [ background ]
+    DISPLAY=:1 ./uwm [ background ]
 ```
 
 This method is very useful if you want to debug the window manager.
@@ -66,7 +66,7 @@ This method is very useful if you want to debug the window manager.
 2. The second method is just launching a new server instance, using the following command:
 
 ```console
-    xinit ./uwf [ background ] -- :1
+    xinit ./uwm [ background ] -- :1
 ```
 
 and then you can move between X instances using Ctrl + Alt + Fx
@@ -93,9 +93,7 @@ You need to create a 30x30 default.bmp file in the main project folder (it will 
 TODO
 ----
 
-* Add a window destroy event handler (DONE)
 * Basic configuration handling (background color/image and default terminal)
 * Scale background image
 * Finish work on text drawing functions
 * Add better argument parsing.
-* Fix issue #2 (DONE)
