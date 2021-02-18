@@ -16,7 +16,7 @@ void draw_application_icon(char* icon_name, Display *display, Window win, unsign
 
     img = imlib_load_image(icon_name);
     if(img == NULL){
-        printf("Error loading imlibimage");
+        printf("Error loading imlibimage - icon file: %s", icon_name);
     }
     Screen *screen = DefaultScreenOfDisplay(display);
     imlib_context_set_image(img);

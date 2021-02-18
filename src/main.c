@@ -113,13 +113,9 @@ int main(int argc, char **argv){
                 break;
             case ClientMessage:
                 client_message_handler(local_event, display);
-                //Atom wm_state = XInternAtom(display, XGetAtomName(display,local_event.xclient.message_type), True);
-                //unsigned long nitems_return;
-                //unsigned char *prop_return;
-                //get_property_value(display, local_event.xclient.window, XGetAtomName(display,local_event.xclient.message_type), 256, &nitems_return, (unsigned char **)&prop_return);
                 break;
             case MappingNotify:
-                printf("Mapping notify Even\nt");
+                printf("Mapping notify Event\n");
                 break;
             default:
                 printf("default event %d\n", local_event.type);
