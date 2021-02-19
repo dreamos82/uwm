@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <X11/X.h>
 #include <X11/Xutil.h>
 #include <X11/Xlib.h>
@@ -7,6 +8,7 @@
 
 #include "icons.h"
 #include "utils.h"
+#include "definitions.h"
 
 void draw_application_icon(char* icon_name, Display *display, Window win, unsigned int x, unsigned int y){
     unsigned int img_h;
@@ -14,7 +16,13 @@ void draw_application_icon(char* icon_name, Display *display, Window win, unsign
     Pixmap my_pix;
     Imlib_Image img;
 
-    img = imlib_load_image(icon_name);
+    char icon_path[BASE_PATH_LENGTH];
+
+    // TODO Probably the concatenation will be handled by a utility function in the future.
+    strcat(icon_path, ICONS_BASE_PATH);
+    strcat(icon_path, icon_name);
+
+    img = imlib_load_image(icon_path);
     if(img == NULL){
         printf("Error loading imlibimage - icon file: %s", icon_name);
     }
@@ -26,7 +34,7 @@ void draw_application_icon(char* icon_name, Display *display, Window win, unsign
     Window icon_window; 
     icon_window = XCreateSimpleWindow(display, win, x, y, img_w, img_h, 1, WhitePixel(display, 0), WhitePixel(display, 0));
 
-    printf("Img size: %d - %d\n", img_w, img_h);
+    printf("Icon size: %d - %d\n", img_w, img_h);
     my_pix = XCreatePixmap(display, icon_window, img_w, img_h, DefaultDepthOfScreen(screen));
     imlib_context_set_display(display);
     imlib_context_set_visual(DefaultVisualOfScreen(screen));

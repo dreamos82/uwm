@@ -16,6 +16,10 @@
 
 #define ERROR_STRING_SIZE 100
 
+#define ICONS_BASE_PATH "../../"
+
+#define BASE_PATH_LENGTH 80
+
 typedef struct {
     int screen_num;
     int width;
