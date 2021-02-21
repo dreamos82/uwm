@@ -114,7 +114,7 @@ int get_property_value(Display* display, Window window,char *propname, long max_
     unsigned char* prop_to_return;
     unsigned long n_items;
     //int max_length = 32;
-    printf("-----GET_PROPERTY_VALUE-------\n");
+    printf("----GET_PROPERTY_VALUE----\n");
     printf("\tPropname: %s\n", propname);
     property = XInternAtom(display, propname, True);
     if(property==None){

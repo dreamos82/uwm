@@ -25,9 +25,8 @@ void button_handler(XEvent event,Display *display, ScreenInfos infos){
             unsigned long _pid = get_window_pid(display, event.xbutton.window);
             char *child_name;
             XFetchName(display, event.xbutton.subwindow, &child_name);
-            printf("Window name: %s\n", child_name);
-            printf("Check return value: %lu\n", _pid);
-            printf("Coordinates: x=%d - y=%d\n", event.xbutton.x, event.xbutton.y);
+            printf("Window name: %s - Check return value: %lu\n", child_name, _pid);
+            printf("Coordinates: x=%d-y=%d\n", event.xbutton.x, event.xbutton.y);
             break;
         case Button2:
             printf("---Mid Button pressed---\n");
@@ -42,23 +41,21 @@ void button_handler(XEvent event,Display *display, ScreenInfos infos){
             char *window_name;
             if(current_window!=None){
                 XFetchName(event.xbutton.display, current_window, &window_name);
-                printf("Window name: %s - ", window_name);
+                printf("Window name: %s - Current_Window != None", window_name);
                 unsigned long _pid_kill = get_window_pid(display, event.xbutton.subwindow);
                 XDestroyWindow(event.xbutton.display, current_window);
                 printf("To kill: %ld -", _pid_kill);
                 if(_pid_kill!=0){
                     kill(_pid_kill, SIGKILL);
                 }
-                printf("Current_Window != none");
             } else {
                 //XFetchName(event.xbutton.display, event.xbutton.window, &window_name);
-                printf("Current_Window == none");
+                printf("Current_Window == none nothing to be done");
             }
             printf(" Click on: %s\n", window_name);
             XFree(window_name);
             break;
     }
-    printf("---End---\n");
 }
 
 char keyboard_handler(XEvent event, Display* display, ScreenInfos infos){
@@ -115,12 +112,12 @@ void configure_notify_handler(XEvent local_event, Display* display){
 }
 
 void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos){
-    printf("----------Map Notify\n");
+    printf("----Map Notify----\n");
     XWindowAttributes win_attr;
     char *child_name;
     XGetWindowAttributes(display, local_event.xmap.window, &win_attr);
     XFetchName(display, local_event.xmap.window, &child_name);
-    printf("\tAttributes: W: %d - H: %d - Name: %s - ID %lu\n", win_attr.width, win_attr.height, child_name, local_event.xmap.window);
+    printf("\tAttributes: W:%d - H:%d - Name: %s - ID: %lu\n", win_attr.width, win_attr.height, child_name, local_event.xmap.window);
     Window trans = None;	
     XGetTransientForHint(display, local_event.xmap.window, &trans);	
     printf("\tIs transient: %ld\n", trans);
@@ -172,7 +169,7 @@ void destroy_notify_handler(XEvent local_event, Display *display){
 }
 
 void client_message_handler(XEvent local_event, Display *display){
-    printf("----------ClientMessage\n");
+    printf("----ClientMessage----\n");
     printf("\tMessage: %s\n", XGetAtomName(display,local_event.xclient.message_type));
     printf("\tFormat: %d\n", local_event.xclient.format); 
     Atom *atoms = (Atom *)local_event.xclient.data.l;
