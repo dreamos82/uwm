@@ -39,10 +39,11 @@ void set_window_color(Display *display, Window window, char* root_color){
     XClearWindow(display, window);
 }
 
-void draw_controls(Display* display, Window window, int x, int y, int width, int height, unsigned long back_color, unsigned long fore_color){
+void draw_controls(Display* display, Window window, XWindowAttributes attr, unsigned long back_color, unsigned long fore_color){
     Window button_window; 
-    button_window = XCreateSimpleWindow(display, window, x, y, width, height, 1, WhitePixel(display, 0), WhitePixel(display, 0));
-    draw_application_icon("default.ico", display, button_window, 5, 5);
+    int x;
+    x = attr.width - 30; 
+    button_window = XCreateSimpleWindow(display, window, x, 3, 20, 20, 1, WhitePixel(display, 0), WhitePixel(display, 0));
     /*XStoreName(display, button_window, "QuitButton");
       XGCValues values; 
       GC local_gc = XCreateGC(display, button_window, 0, &values);

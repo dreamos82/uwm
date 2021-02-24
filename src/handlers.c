@@ -129,15 +129,13 @@ void map_notify_handler(XEvent local_event, Display* display, ScreenInfos infos)
     }
     if(child_name!=NULL){
         if(strcmp(child_name, "Parent") && local_event.xmap.override_redirect == False){
-            Window new_win = draw_window_with_name(display, RootWindow(display, infos.screen_num), "Parent", infos.screen_num, 
-                    win_attr.x, win_attr.y, win_attr.width, win_attr.height+DECORATION_HEIGHT, 0, 
-                    BlackPixel(display, infos.screen_num));
+            Window new_win = draw_window_with_name(display, RootWindow(display, infos.screen_num), "Parent", infos.screen_num, win_attr.x, win_attr.y, win_attr.width, win_attr.height+DECORATION_HEIGHT, 0, BlackPixel(display, infos.screen_num));
             XMapWindow(display, new_win);
             XReparentWindow(display,local_event.xmap.window, new_win,0, DECORATION_HEIGHT);
             set_window_item(local_event.xmap.window, new_win);
             XSelectInput(display, local_event.xmap.window, StructureNotifyMask);
             printf("\tParent window id: %lu\n", new_win);
-            //draw_controls(display, new_win, 5, 5, 20, 20, BlackPixel(display, infos.screen_num), WhitePixel(display, infos.screen_num));
+            draw_controls(display, new_win, win_attr, BlackPixel(display, infos.screen_num), WhitePixel(display, infos.screen_num));
             draw_application_icon("default.bmp", display, new_win, 0,0);
             put_text(display, new_win, child_name, "9x15", 50, 15, BlackPixel(display,infos.screen_num), WhitePixel(display, infos.screen_num));
             //get_system_icon("default.ico", display, new_win);
