@@ -47,7 +47,7 @@ And then you can launch it in two different ways:
 
 ### Using Xephyr
 
-1. The first is using xephyr,  a tool that launch a X server instance in a window. After installing it (check your distro documentation) type
+The first is using xephyr,  a tool that launch a X server instance in a window. After installing it (check your distro documentation) type
 
 ```console
     Xephyr -screen 1024x768 -br :1
@@ -63,7 +63,7 @@ This method is very useful if you want to debug the window manager.
 
 ### Launching Full screen
 
-2. The second method is just launching a new server instance, using the following command:
+The second method is just launching a new server instance, using the following command:
 
 ```console
     xinit ./uwm [ background ] -- :1
