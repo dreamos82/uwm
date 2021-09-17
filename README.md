@@ -71,7 +71,7 @@ The second method is just launching a new server instance, using the following c
 
 and then you can move between X instances using Ctrl + Alt + Fx
 
-[ background ] is optional, and it specifies the background image. If you don't specify it, a default color will be choosed.
+[ background ] is optional, and it specifies the background image. If you don't specify it, a default color will be used.
 
 (Using that command a new X instance will be launched, and you don't need to close the running server)
 
@@ -89,6 +89,12 @@ There are very few thing that you can do using this useless window manager, here
 * To close a program just right click on program window decoration.
 
 Make sure to have a 30x30 default.bmp file in the main project folder (if you downloaded from github there should be one).
+Also make sure that this line in src/definitions.h is up to date with the correct path of the icons: 
+
+```C
+#define ICONS_BASE_PATH "../../"
+```
+
 
 TODO
 ----
