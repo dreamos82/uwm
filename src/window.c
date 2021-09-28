@@ -43,14 +43,31 @@ void draw_controls(Display* display, Window window, XWindowAttributes attr, unsi
     Window button_window; 
     int x;
     x = attr.width - 30; 
-    button_window = XCreateSimpleWindow(display, window, x, 3, 20, 20, 1, WhitePixel(display, 0), WhitePixel(display, 0));
+    button_window = XCreateSimpleWindow(display, window, x, 3, 20, 20, 1, BlackPixel(display, 0), WhitePixel(display, 0));
+    XGCValues values; 
     /*XStoreName(display, button_window, "QuitButton");
       XGCValues values; 
       GC local_gc = XCreateGC(display, button_window, 0, &values);
       XSetBackground(display, local_gc, BlackPixel(display, 0));
       XSetForeground(display, local_gc, BlackPixel(display, 0));
-      XFillRectangle(display, button_window, local_gc, x, y, width, height);*/
+      XFillRectangle(display, button_window, local_gc, x, 3, attr.width, attr.height);*/
     XMapWindow(display, button_window);
+    GC local_gc = XCreateGC(display, button_window, 0, &values);
+    /* define the style of lines that will be drawn using this GC. */
+    unsigned int line_width = 2;		/* line width for the GC.       */
+    int line_style = LineSolid;		/* style for lines drawing and  */
+    int cap_style = CapButt;		/* style of the line's edje and */
+    int join_style = JoinBevel;		/*  joined lines.		*/
+    XSetLineAttributes(display, local_gc,
+                     line_width, line_style, cap_style, join_style);
+
+    XSetBackground(display, local_gc, WhitePixel(display, 0));
+    XSetForeground(display, local_gc, BlackPixel(display, 0));
+    XSetFillStyle(display, local_gc, FillSolid);
+    XSync(display, False);
+    XDrawLine(display,button_window,local_gc,x,x, 15, 15);
+
+    XFlush(display);
 }
 
 void put_text(Display* display, Window window, char* text, char *font_name, int x, int y, unsigned long back_color, unsigned long fore_color){
