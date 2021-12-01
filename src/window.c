@@ -39,11 +39,11 @@ void set_window_color(Display *display, Window window, char* root_color){
     XClearWindow(display, window);
 }
 
-void draw_controls(Display* display, Window window, XWindowAttributes attr, unsigned long back_color, unsigned long fore_color){
+void draw_controls(Display* display, Window window, XWindowAttributes attr, unsigned long back_color, unsigned long fore_color, unsigned short position){
     Window button_window; 
     int x;
-    x = attr.width - 30; 
-    button_window = XCreateSimpleWindow(display, window, x, 3, 20, 20, 1, BlackPixel(display, 0), WhitePixel(display, 0));
+    x = attr.width - (position * CONTROL_MARGIN_H + CONTROL_SPACING); 
+    button_window = XCreateSimpleWindow(display, window, x, CONTROL_MARGIN_V, 20, 20, 1, BlackPixel(display, 0), WhitePixel(display, 0));
     XGCValues values; 
     /*XStoreName(display, button_window, "QuitButton");
       XGCValues values; 
@@ -65,7 +65,7 @@ void draw_controls(Display* display, Window window, XWindowAttributes attr, unsi
     XSetForeground(display, local_gc, BlackPixel(display, 0));
     XSetFillStyle(display, local_gc, FillSolid);
     XSync(display, False);
-    XDrawLine(display,button_window,local_gc,x,x, 15, 15);
+    XDrawLine(display,button_window,local_gc,x,x, 16, 16);
 
     XFlush(display);
 }
