@@ -26,6 +26,10 @@ void button_handler(XEvent event,Display *display, ScreenInfos infos){
             char *child_name;
             XFetchName(display, event.xbutton.subwindow, &child_name);
             printf("Window name: %s - Check return value: %lu\n", child_name, _pid);
+            XFetchName(display, event.xbutton.window, &child_name);
+            printf("Window name: %s\n", child_name);
+            XFetchName(display, event.xbutton.root, &child_name);
+            printf("Window name: %s\n", child_name);
             printf("Coordinates: x=%d-y=%d\n", event.xbutton.x, event.xbutton.y);
             break;
         case Button2:

@@ -45,12 +45,17 @@ void draw_controls(Display* display, Window window, XWindowAttributes attr, unsi
     x = attr.width - (position * CONTROL_MARGIN_H + CONTROL_SPACING); 
     button_window = XCreateSimpleWindow(display, window, x, CONTROL_MARGIN_V, 20, 20, 1, BlackPixel(display, 0), WhitePixel(display, 0));
     XGCValues values; 
-    /*XStoreName(display, button_window, "QuitButton");
-      XGCValues values; 
-      GC local_gc = XCreateGC(display, button_window, 0, &values);
-      XSetBackground(display, local_gc, BlackPixel(display, 0));
-      XSetForeground(display, local_gc, BlackPixel(display, 0));
-      XFillRectangle(display, button_window, local_gc, x, 3, attr.width, attr.height);*/
+
+    switch(position){
+        case CONTROL_RIGHT:
+            XStoreName(display, button_window, "c-quit");
+            break;   
+        case CONTROL_CENTER:
+            XStoreName(display, button_window, "c-maximize");
+        case CONTROL_LEFT:
+            XStoreName(display, button_window, "c-maximize");
+    }
+    XSelectInput(display, button_window, ButtonPressMask);
     XMapWindow(display, button_window);
     GC local_gc = XCreateGC(display, button_window, 0, &values);
     /* define the style of lines that will be drawn using this GC. */
